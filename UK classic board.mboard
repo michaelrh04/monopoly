@@ -1,0 +1,427 @@
+{
+	"Name": "British Board",
+	"Creator": "Michael Hargreaves",
+	"Language": "English",
+	"Residences": {
+		"Brown": [
+			{
+				"Name": "Old Kent Road",
+				"Hex": "654321",
+				"Price": 60,
+				"Position": 1,
+				"Rent": [
+					2,
+					10,
+					30,
+					90,
+					160,
+					250
+				],
+				"HouseIncrementationPrice": 50
+			},
+			{
+				"Name": "Whitechapel Road",
+				"Hex": "654321",
+				"Price": 60,
+				"Position": 3,
+				"Rent": [
+					4,
+					20,
+					60,
+					180,
+					320,
+					450
+				],
+				"HouseIncrementationPrice": 50
+			}
+		],
+		"Light Blue": [
+			{
+				"Name": "The Angel, Islington",
+				"Hex": "6c97ba",
+				"Price": 100,
+				"Position": 6,
+				"Rent": [
+					6,
+					30,
+					90,
+					270,
+					400,
+					550
+				],
+				"HouseIncrementationPrice": 50
+			},
+			{
+				"Name": "Euston Road",
+				"Hex": "6c97ba",
+				"Price": 100,
+				"Position": 8,
+				"Rent": [
+					6,
+					30,
+					90,
+					270,
+					400,
+					550
+				],
+				"HouseIncrementationPrice": 50
+			},
+			{
+				"Name": "Pentonville Road",
+				"Hex": "6c97ba",
+				"Price": 120,
+				"Position": 9,
+				"Rent": [
+					8,
+					40,
+					100,
+					300,
+					450,
+					600
+				],
+				"HouseIncrementationPrice": 50
+			}
+		],
+		"Pink": [
+			{
+				"Name": "Pall Mall",
+				"Hex": "d21a68",
+				"Price": 140,
+				"Position": 11,
+				"Rent": [
+					10,
+					50,
+					150,
+					450,
+					625,
+					750
+				],
+				"HouseIncrementationPrice": 100
+			},
+			{
+				"Name": "Whitehall",
+				"Hex": "d21a68",
+				"Price": 140,
+				"Position": 13,
+				"Rent": [
+					10,
+					50,
+					150,
+					450,
+					625,
+					750
+				],
+				"HouseIncrementationPrice": 100
+			},
+			{
+				"Name": "Northumberland Avenue",
+				"Hex": "d21a68",
+				"Price": 160,
+				"Position": 14,
+				"Rent": [
+					12,
+					60,
+					180,
+					500,
+					700,
+					900
+				],
+				"HouseIncrementationPrice": 100
+			}
+		],
+		"Orange": [
+			{
+				"Name": "Bow Street",
+				"Hex": "d78122",
+				"Price": 180,
+				"Position": 16,
+				"Rent": [
+					14,
+					70,
+					200,
+					500,
+					750,
+					950
+				],
+				"HouseIncrementationPrice": 100
+			},
+			{
+				"Name": "Marlborough Street",
+				"Hex": "d78122",
+				"Price": 180,
+				"Position": 18,
+				"Rent": [
+					14,
+					70,
+					200,
+					550,
+					750,
+					950
+				],
+				"HouseIncrementationPrice": 100
+			},
+			{
+				"Name": "Vine Street",
+				"Hex": "d78122",
+				"Price": 200,
+				"Position": 19,
+				"Rent": [
+					16,
+					80,
+					220,
+					600,
+					800,
+					1000
+				],
+				"HouseIncrementationPrice": 100
+			}
+		],
+		"Red": [
+			{
+				"Name": "The Strand",
+				"Hex": "de1a1c",
+				"Price": 220,
+				"Position": 21,
+				"Rent": [
+					18,
+					90,
+					250,
+					700,
+					875,
+					1050
+				],
+				"HouseIncrementationPrice": 150
+			},
+			{
+				"Name": "Fleet Street",
+				"Hex": "de1a1c",
+				"Price": 220,
+				"Position": 23,
+				"Rent": [
+					18,
+					90,
+					250,
+					700,
+					875,
+					1050
+				],
+				"HouseIncrementationPrice": 150
+			},
+			{
+				"Name": "Trafalgar Square",
+				"Hex": "de1a1c",
+				"Price": 240,
+				"Position": 24,
+				"Rent": [
+					20,
+					100,
+					300,
+					750,
+					925,
+					1100
+				],
+				"HouseIncrementationPrice": 150
+			}
+		],
+		"Yellow": [
+			{
+				"Name": "Leicester Square",
+				"Hex": "eed004",
+				"Price": 260,
+				"Position": 26,
+				"Rent": [
+					22,
+					110,
+					330,
+					800,
+					975,
+					1150
+				],
+				"HouseIncrementationPrice": 150
+			},
+			{
+				"Name": "Coventry Street",
+				"Hex": "eed004",
+				"Price": 260,
+				"Position": 27,
+				"Rent": [
+					22,
+					110,
+					330,
+					800,
+					975,
+					1150
+				],
+				"HouseIncrementationPrice": 150
+			},
+			{
+				"Name": "Piccadilly",
+				"Hex": "eed004",
+				"Price": 280,
+				"Position": 29,
+				"Rent": [
+					22,
+					120,
+					360,
+					850,
+					1025,
+					1200
+				],
+				"HouseIncrementationPrice": 150
+			}
+		],
+		"Green": [
+			{
+				"Name": "Regent Street",
+				"Hex": "29a33a",
+				"Price": 300,
+				"Position": 31,
+				"Rent": [
+					26,
+					130,
+					390,
+					900,
+					1100,
+					1275
+				],
+				"HouseIncrementationPrice": 200
+			},
+			{
+				"Name": "Oxford Street",
+				"Hex": "29a33a",
+				"Price": 300,
+				"Position": 32,
+				"Rent": [
+					26,
+					130,
+					390,
+					900,
+					1100,
+					1275
+				],
+				"HouseIncrementationPrice": 200
+			},
+			{
+				"Name": "Bond Street",
+				"Hex": "29a33a",
+				"Price": 320,
+				"Position": 34,
+				"Rent": [
+					28,
+					150,
+					450,
+					1000,
+					1200,
+					1400
+				],
+				"HouseIncrementationPrice": 200
+			}
+		],
+		"Dark Blue": [
+			{
+				"Name": "Park Lane",
+				"Hex": "1167a0",
+				"Price": 350,
+				"Position": 37,
+				"Rent": [
+					35,
+					175,
+					500,
+					1100,
+					1300,
+					1500
+				],
+				"HouseIncrementationPrice": 200
+			},
+			{
+				"Name": "Mayfair",
+				"Hex": "1167a0",
+				"Price": 400,
+				"Position": 39,
+				"Rent": [
+					50,
+					200,
+					600,
+					1400,
+					1700,
+					2000
+				],
+				"HouseIncrementationPrice": 200
+			}
+		]
+	},
+	"Stations": [
+		{
+			"Name": "King's Cross Station",
+			"Hex": "00dedfe1",
+			"Price": 200,
+			"Position": 5
+		},
+		{
+			"Name": "Marylebone Station",
+			"Hex": "00dedfe1",
+			"Price": 200,
+			"Position": 15
+		},
+		{
+			"Name": "Fenchurch St. Station",
+			"Hex": "00dedfe1",
+			"Price": 200,
+			"Position": 25
+		},
+		{
+			"Name": "Liverpool St. Station",
+			"Hex": "00dedfe1",
+			"Price": 200,
+			"Position": 35
+		}
+	],
+	"Utilities": [
+		{
+			"Name": "Electric Company",
+			"Hex": "00dedfe1",
+			"Price": 150,
+			"Position": 12,
+			"Symbol": "Bulb"
+		},
+		{
+			"Name": "Water Works",
+			"Hex": "00dedfe1",
+			"Price": 150,
+			"Position": 28,
+			"Symbol": "Tap"
+		}
+	],
+	"ChanceIndexes": [
+		7,
+		22,
+		36
+	],
+	"ChestIndexes": [
+		2,
+		17,
+		33
+	],
+	"TaxIndexes": [
+		{
+			"Name": "Income Tax",
+			"Cost": 200,
+			"Position": 4
+		},
+		{
+			"Name": "Super Tax",
+			"Cost": 100,
+			"Position": 38
+		}
+	],
+	"StationsRent": [
+		25,
+		50,
+		100,
+		200
+	],
+	"UtilityMultipliers": [
+		4,
+		10
+	]
+}
