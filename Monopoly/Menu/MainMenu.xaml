@@ -1,0 +1,911 @@
+﻿<mah:MetroWindow x:Class="Monopoly.Menu.MainMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:parent="clr-namespace:Monopoly"
+        xmlns:local="clr-namespace:Monopoly.Menu"
+        mc:Ignorable="d" Icon="/Monopoly;component/Resources/Images/Icon.png"
+                 
+        dialog:DialogParticipation.Register="{Binding}"
+                 
+        Background="#8FD5A6" TitleCharacterCasing="Normal" ShowMaxRestoreButton="False"
+        Title="Monopoly" Height="490" MinHeight="490" MinWidth="382" Width="382" MaxWidth="530">
+    
+    <!-- Add relevant resources -->
+    <mah:MetroWindow.Resources>
+        <local:ParameterCompilerConverter x:Key="ParameterCompilerConverter"/>
+        <parent:LobbyImageConverter x:Key="LobbyImageConverter"/>
+        <parent:DiceNumberConverter x:Key="DiceNumberConverter"/>
+    </mah:MetroWindow.Resources>
+    
+    <!-- Define information about the window headbar -->
+    <!-- Draw the icon -->
+    <mah:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Grid Background="#22000000" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                <Image Source="/Monopoly;component/Resources/Images/IconInset.png" Margin="3"/>
+            </Grid>
+        </DataTemplate>
+    </mah:MetroWindow.IconTemplate>
+    <!-- Buttons within the RIGHT SIDE of the titlebar -->
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button>
+                <icons:PackIconMaterial Kind="Cog"/>
+            </Button>
+            <Button>
+                <icons:PackIconMaterial Kind="Recycle"/>
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+    
+    <Grid>
+        <Grid>
+            <!-- Column and row definitions for layout -->
+            <Grid.ColumnDefinitions>
+                <!-- Margin -->
+                <ColumnDefinition Width="10"/>
+                <!-- Layout -->
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="64"/>
+                <!-- Margin -->
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <!-- Margin -->
+                <RowDefinition Height="10"/>
+                <!-- Layout -->
+                <RowDefinition Height="64"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="64"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="64"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="64"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="64"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="14"/>
+                <!-- Margin -->
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <!-- Resources -->
+            <Grid.Resources>
+                <Style x:Key="SidebarButtonStyle" TargetType="{x:Type mah:Tile}">
+                    <Setter Property="Width" Value="64"/>
+                    <Setter Property="Height" Value="64"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+                <Style x:Key="SidebarIconStyle" TargetType="{x:Type icons:PackIconMaterial}">
+                    <Setter Property="Width" Value="40"/>
+                    <Setter Property="Height" Value="40"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </Grid.Resources>
+            <!-- Header content -->
+            <Border Background="{DynamicResource MahApps.Brushes.Accent}" Grid.Row="1" Grid.Column="1">
+                <Viewbox HorizontalAlignment="Left" Margin="10,3,10,5">
+                    <StackPanel>
+                        <TextBlock Text="Launchpad" />
+                        <TextBlock Text="Start your real-estate career" FontSize="8" Margin="0,-4,0,0" Foreground="LightGray" FontWeight="Light"/>
+                    </StackPanel>
+                </Viewbox>
+            </Border>
+            <!-- List of players content -->
+            <Rectangle Fill="#11000000" Grid.Row="12" Grid.Column="1"/>
+            <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Padding="0,0,0,5" BorderThickness="1" Grid.Column="1" Grid.Row="3" Grid.RowSpan="10">
+                <ItemsControl ItemsSource="{Binding Players, UpdateSourceTrigger=PropertyChanged}">
+                    <!-- Draw the item template first -->
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <DockPanel LastChildFill="False" Margin="0"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <!-- Draw the actual player icons themselves -->
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Ensure animation can take place when a player is added -->
+                            <DataTemplate.Resources>
+                                <Storyboard x:Key="ItemInAnimation" AutoReverse="False">
+                                    <DoubleAnimation Storyboard.TargetName="PlayerRepresentation" Storyboard.TargetProperty="(UIElement.Opacity)" From="0" To="1" Duration="0:0:0.5"/>
+                                </Storyboard>
+                            </DataTemplate.Resources>
+                            <DataTemplate.Triggers>
+                                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                    <BeginStoryboard Storyboard="{StaticResource ItemInAnimation}"/>
+                                </EventTrigger>
+                            </DataTemplate.Triggers>
+                            <!-- Define the actual representation itself -->
+                            <Border>
+                                <!-- Define hover transparency -->
+                                <Border.Style>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Opacity" Value="0.8"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <Grid x:Name="PlayerRepresentation" Width="64">
+                                    <!-- Define the style of the overall grid -->
+                                    <Grid.Style>
+                                        <Style TargetType="{x:Type Grid}">
+                                            <Setter Property="Margin" Value="10,0,0,0"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Digit}" Value="1">
+                                                    <Setter Property="Margin" Value="0"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <!-- Define those definitions! -->
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="64"/>
+                                        <RowDefinition Height="10"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <!-- Add the gradient falling down -->
+                                    <Rectangle Margin="0,50,0,0" Grid.RowSpan="3">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush>
+                                                <GradientStop Color="#1D9921" Offset="-1"/>
+                                                <GradientStop Color="#001D9921" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <!-- Use dice for the player number icons -->
+                                    <icons:PackIconFontAwesome Width="64" Height="64" Foreground="#1D9921" Kind="{Binding Digit, Converter={StaticResource DiceNumberConverter}}"/>
+                                    <!-- Add the text! -->
+                                    <DockPanel Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,0,0,0">
+                                        <!-- Rotate the dockpanel as needed -->
+                                        <DockPanel.LayoutTransform>
+                                            <RotateTransform Angle="90"/>
+                                        </DockPanel.LayoutTransform>
+                                        <!-- Add the text elements -->
+                                        <TextBlock Text="{Binding Name}" FontSize="32"/>
+                                    </DockPanel>
+                                    <!-- Now add the buttons that should go on the other side -->
+                                    <StackPanel Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,-1,5,0">
+                                        <StackPanel.Resources>
+                                            <Style x:Key="PlayerOption" TargetType="{x:Type mah:Tile}">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="Foreground" Value="#77ffffff"/>
+                                                <Setter Property="Width" Value="12"/>
+                                                <Setter Property="Height" Value="12"/>
+                                            </Style>
+                                            <Style TargetType="{x:Type icons:PackIconMaterial}">
+                                                <Setter Property="Width" Value="12"/>
+                                                <Setter Property="Height" Value="12"/>
+                                            </Style>
+                                        </StackPanel.Resources>
+                                        <mah:Tile Style="{StaticResource PlayerOption}" Command="{Binding DataContext.RemovePlayer, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:MetroWindow}}" CommandParameter="{Binding}">
+                                            <icons:PackIconMaterial Kind="Close"/>
+                                            <mah:Tile.ToolTip>
+                                                <TextBlock Text="Remove player from lobby."/>
+                                            </mah:Tile.ToolTip>
+                                        </mah:Tile>
+                                        <mah:Tile>
+                                            <icons:PackIconMaterial Kind="Earth"/>
+                                            <mah:Tile.Style>
+                                                <Style BasedOn="{StaticResource PlayerOption}" TargetType="{x:Type mah:Tile}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Online}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </mah:Tile.Style>
+                                            <mah:Tile.ToolTip>
+                                                <TextBlock Text="Account is logged in and connected to our servers."/>
+                                            </mah:Tile.ToolTip>
+                                        </mah:Tile>
+                                        <mah:Tile>
+                                            <icons:PackIconMaterial Kind="Account"/>
+                                            <mah:Tile.Style>
+                                                <Style BasedOn="{StaticResource PlayerOption}" TargetType="{x:Type mah:Tile}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Online}" Value="True">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </mah:Tile.Style>
+                                            <mah:Tile.ToolTip>
+                                                <TextBlock Text="This player is a guest (account not logged in)."/>
+                                            </mah:Tile.ToolTip>
+                                        </mah:Tile>
+                                        <mah:Tile>
+                                            <icons:PackIconMaterial Kind="Finance"/>
+                                            <mah:Tile.Style>
+                                                <Style BasedOn="{StaticResource PlayerOption}" TargetType="{x:Type mah:Tile}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Online}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </mah:Tile.Style>
+                                            <mah:Tile.ToolTip>
+                                                <TextBlock Text="This game will count towards the user's account statistics."/>
+                                            </mah:Tile.ToolTip>
+                                        </mah:Tile>
+                                    </StackPanel>
+                                    <!-- Draw the bottom figure (piece) -->
+                                    <Image Source="{Binding Icon, Converter={StaticResource LobbyImageConverter}}" VerticalAlignment="Bottom" Grid.Row="2"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <StackPanel Grid.Row="3" Grid.Column="1" Grid.RowSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                <!-- Set styles -->
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}"/>
+                        <Setter Property="Margin" Value="0,5,0,0"/>
+                    </Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Padding" Value="5"/>
+                    </Style>
+                    <Style TargetType="{x:Type icons:PackIconMaterial}">
+                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                        <Setter Property="Margin" Value="5"/>
+                    </Style>
+                </StackPanel.Resources>
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Setter Property="Visibility" Value="Hidden"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Players.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <!-- Add controls -->
+                <Grid Margin="0">
+                    <TextBlock Text="Ready to resume a pre-existing game?"/>
+                    <icons:PackIconMaterial Kind="ArrowTopRight"/>
+                </Grid>
+                <Grid>
+                    <TextBlock Text="Or start a new game by adding a player."/>
+                    <icons:PackIconMaterial Kind="ArrowRight"/>
+                </Grid>
+                <Grid>
+                    <TextBlock Text="You can clear your new lobby at any time."/>
+                    <icons:PackIconMaterial Kind="ArrowBottomRight"/>
+                </Grid>
+                <Grid>
+                    <TextBlock Text="Customise your game settings." Padding="5"/>
+                    <icons:PackIconMaterial Kind="Cog"/>
+                </Grid>
+                <Grid>
+                    <TextBlock Text="You also need to a select a board to play on."/>
+                    <icons:PackIconMaterial Kind="MapOutline"/>
+                </Grid>
+                <Grid>
+                    <TextBlock Text="Or, for a challenge, create your own board."/>
+                    <icons:PackIconMaterial Kind="MapMarkerPlusOutline"/>
+                </Grid>
+            </StackPanel>
+            
+            <!-- Controls content (buttons) -->
+            <mah:Tile Command="{Binding Play}" Grid.Column="3" Grid.Row="1" Style="{StaticResource SidebarButtonStyle}">
+                <icons:PackIconMaterial>
+                    <icons:PackIconMaterial.Style>
+                        <Style TargetType="{x:Type icons:PackIconMaterial}" BasedOn="{StaticResource SidebarIconStyle}">
+                            <Setter Property="Kind" Value="Play"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Players.Count}" Value="0">
+                                    <Setter Property="Kind" Value="BookPlayOutline"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Players.Count}" Value="1">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </icons:PackIconMaterial.Style>
+                </icons:PackIconMaterial>
+            </mah:Tile>
+            <mah:Tile Command="{Binding ResetLoginStatus}" CommandParameter="{Binding Players, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="3" Style="{StaticResource SidebarButtonStyle}">
+                <!-- Interaction triggers -->
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:ChangePropertyAction TargetObject="{Binding ElementName=AddNewPlayerFlyout}" PropertyName="IsOpen" Value="True"/>
+                        <i:ChangePropertyAction TargetObject="{Binding ElementName=LoginUsername}" PropertyName="Text" Value=""/>
+                        <i:ChangePropertyAction TargetObject="{Binding ElementName=LoginPassword}" PropertyName="Password" Value=""/>
+                        <i:ChangePropertyAction TargetObject="{Binding ElementName=RegisterFirstNames}" PropertyName="Text" Value=""/>
+                        <i:ChangePropertyAction TargetObject="{Binding ElementName=RegisterSurnames}" PropertyName="Text" Value=""/>
+                        <i:ChangePropertyAction TargetObject="{Binding ElementName=RegisterEmail}" PropertyName="Text" Value=""/>
+                        <i:ChangePropertyAction TargetObject="{Binding ElementName=GuestUsername}" PropertyName="Text" Value=""/>
+                        <i:ChangePropertyAction TargetObject="{Binding ElementName=IconSelectBox}" PropertyName="SelectedIndex" Value="-1"/>
+                        <i:ChangePropertyAction TargetObject="{Binding ElementName=OnlinePlayerRadioBtn}" PropertyName="IsChecked" Value="True"/>
+                        <i:ChangePropertyAction TargetObject="{Binding ElementName=RegisteringNewAccountBtn}" PropertyName="IsChecked" Value="False"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <icons:PackIconMaterial Kind="AccountPlusOutline" Style="{StaticResource SidebarIconStyle}"/>
+            </mah:Tile>
+            <!-- Clear list button -->
+            <mah:Tile Command="{Binding ClearList}" Grid.Column="3" Grid.Row="5" Style="{StaticResource SidebarButtonStyle}">
+                <icons:PackIconMaterial Kind="PlaylistRemove"  Style="{StaticResource SidebarIconStyle}"/>
+            </mah:Tile>
+            <!-- Settings button -->
+            <mah:Tile Grid.Column="3" Grid.Row="7" Style="{StaticResource SidebarButtonStyle}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:ChangePropertyAction TargetName="ChangeSettingsFlyout" PropertyName="IsOpen" Value="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <icons:PackIconMaterial Kind="Cog" Style="{StaticResource SidebarIconStyle}"/>
+            </mah:Tile>
+            <!-- Choosing the board to play -->
+            <mah:Tile Grid.Column="3" Grid.Row="9" Width="64" Height="40" VerticalAlignment="Top" Style="{StaticResource SidebarButtonStyle}">
+                <icons:PackIconMaterial Kind="MapOutline" Height="28" Width="28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:ChangePropertyAction TargetName="SelectBoardFlyout" PropertyName="IsOpen" Value="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </mah:Tile>
+            <mah:Tile Background="{DynamicResource MahApps.Brushes.Accent2}" Grid.Column="3" Grid.Row="9" Width="64" Height="24" VerticalAlignment="Bottom" Style="{StaticResource SidebarButtonStyle}">
+                <icons:PackIconMaterial Kind="MapMarkerPlusOutline" Height="18" Width="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </mah:Tile>
+            <!-- Footer content -->
+        </Grid>
+        <!-- Change settings flyout -->
+        <mah:Flyout x:Name="ChangeSettingsFlyout" IsOpen="False" Position="Right" Header="Change game settings" Width="310">
+            <StackPanel Margin="15,0">
+                <!-- Styles -->
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type mah:Tile}">
+                        <Setter Property="Height" Value="24"/>
+                        <Setter Property="Width" Value="70"/>
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="FontSize" Value="12"/>
+                    </Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Padding" Value="1"/>
+                    </Style>
+                    <Style TargetType="{x:Type Slider}">
+                        <Setter Property="IsSnapToTickEnabled" Value="True"/>
+                        <Setter Property="Margin" Value="0,5,0,-5"/>
+                        <Setter Property="TickFrequency" Value="1"/>
+                    </Style>
+                    <Style TargetType="{x:Type CheckBox}">
+                        <Setter Property="Margin" Value="0,2"/>
+                    </Style>
+                </StackPanel.Resources>
+                <!-- Amount of money beginning with -->
+                <DockPanel>
+                    <TextBlock Text="A player should begin playing with £ "/>
+                    <TextBox Text="{Binding Value, ElementName=SettingsOption_BeginAmount}"/>
+                </DockPanel>
+                <Slider x:Name="SettingsOption_BeginAmount" Value="{Binding Settings[amount_begin_with]}" Minimum="1000" Maximum="5000" TickFrequency="1" IsSnapToTickEnabled="True"/>
+                <Separator Margin="0,10" Background="Gray"/>
+                <!-- Amount of money beginning with -->
+                <DockPanel>
+                    <TextBlock Text="Upon passing 'GO', they should gain £ "/>
+                    <TextBox Text="{Binding Value, ElementName=SettingsOption_PassingGoAmount}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Which should be multiplied by " FontSize="10" FontStyle="Italic" Foreground="LightGray"/>
+                    <TextBox x:Name="SettingsOption_PassingGoMultiplier" Text="{Binding Settings[passing_go_amount_multiplier]}" mah:TextBoxHelper.Watermark="1" Opacity="0.75" MaxLength="3"/>
+                    <TextBlock Text=" if landing directly on it." FontSize="10" FontStyle="Italic" Foreground="LightGray"/>
+                </DockPanel>
+                <Slider x:Name="SettingsOption_PassingGoAmount" Value="{Binding Settings[passing_go_amount]}" Minimum="100" Maximum="500" TickFrequency="1" IsSnapToTickEnabled="True"/>
+                <Separator Margin="0,10" Background="Gray"/>
+                <!-- Further customisation options -->
+                <CheckBox x:Name="SettingsOption_Auctions" Content="Trigger auctions on declined properties." IsChecked="{Binding Settings[do_trigger_auctions]}"/>
+                <CheckBox x:Name="SettingsOption_HotelHouses" Content="Limit the number of houses (32) and hotels (12)." IsChecked="{Binding Settings[limit_house_hotel_numbers]}"/>
+                <CheckBox x:Name="SettingsOption_RentCollect" Content="Players can collect rent while jailed." IsChecked="{Binding Settings[allow_rent_collection_while_jailed]}"/>
+                <CheckBox x:Name="SettingsOption_ParkingCollect" Content="Collect taxation through 'free parking'." IsChecked="{Binding Settings[do_taxation_in_free_parking]}"/>
+                <CheckBox x:Name="SettingsOption_UnevenHouses" Content="Allow uneven house construction." IsChecked="{Binding Settings[allow_uneven_house_construction]}"/>
+                <!-- Control buttons (save, reset etc.) -->
+                <DockPanel HorizontalAlignment="Right" Margin="0,10">
+                    <mah:Tile Margin="5,0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:ChangePropertyAction TargetName="SettingsOption_BeginAmount" PropertyName="Value" Value="1500"/>
+                                <i:ChangePropertyAction TargetName="SettingsOption_PassingGoAmount" PropertyName="Value" Value="200"/>
+                                <i:ChangePropertyAction TargetName="SettingsOption_PassingGoMultiplier" PropertyName="Text" Value="1"/>
+                                <i:ChangePropertyAction TargetName="SettingsOption_Auctions" PropertyName="IsChecked" Value="True"/>
+                                <i:ChangePropertyAction TargetName="SettingsOption_HotelHouses" PropertyName="IsChecked" Value="True"/>
+                                <i:ChangePropertyAction TargetName="SettingsOption_RentCollect" PropertyName="IsChecked" Value="True"/>
+                                <i:ChangePropertyAction TargetName="SettingsOption_ParkingCollect" PropertyName="IsChecked" Value="False"/>
+                                <i:ChangePropertyAction TargetName="SettingsOption_UnevenHouses" PropertyName="IsChecked" Value="False"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock FontSize="14">
+                            <icons:PackIconMaterial Kind="Refresh" Height="12"/> Reset
+                        </TextBlock>
+                    </mah:Tile>
+                    <mah:Tile Width="160" IsEnabled="False">
+                        <TextBlock FontSize="14">
+                            <icons:PackIconMaterial Kind="Check" Height="12"/> Saves automatically
+                        </TextBlock>
+                    </mah:Tile>
+                </DockPanel>
+            </StackPanel>
+        </mah:Flyout>
+        <!-- Select a board flyout -->
+        <mah:Flyout x:Name="SelectBoardFlyout" Position="Right" Header="Select a board" Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}">
+            <StackPanel Margin="10,0">
+                <Viewbox Height="70" HorizontalAlignment="Left">
+                    <Button IsHitTestVisible="False" Opacity="0.4" Padding="5">
+                        <StackPanel>
+                            <TextBlock Text="Board name" FontSize="16"/>
+                            <DockPanel>
+                                <TextBlock Text="Language" Foreground="LightGray"/>
+                                <TextBlock Text="Name of creator" Foreground="DarkGray" FontStyle="Italic" Margin="5,0"/>
+                            </DockPanel>
+                        </StackPanel>
+                    </Button>
+                </Viewbox>
+                <TextBlock Text="Available boards" FontSize="16" Margin="0,7.5,0,0"/>
+                <TextBlock Text="Click on any board in this list and close the flyout to select it for your new game. Don't see your board here? Ensure it is in your Documents' boards folder and that it is correctly formatted." Margin="0,0,0,7.5" Foreground="DarkGray" TextWrapping="Wrap" FontSize="12"/>
+                <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding AvailableBoards}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Viewbox Height="70" HorizontalAlignment="Left">
+                                    <Button Padding="5" Command="{Binding DataContext.SelectBoard, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mah:MetroWindow}}}" CommandParameter="{Binding}">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Name}" FontSize="16"/>
+                                            <DockPanel>
+                                                <TextBlock Text="{Binding Language}" Foreground="LightGray"/>
+                                                <TextBlock Text="{Binding Creator, StringFormat=created by {0}}" Foreground="DarkGray" FontStyle="Italic" Margin="5,0"/>
+                                            </DockPanel>
+                                        </StackPanel>
+                                    </Button>
+                                </Viewbox>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+            </ScrollViewer>
+            </StackPanel>
+        </mah:Flyout>
+        <!-- Add a new player flyout -->
+        <mah:Flyout IsOpen="{Binding FlyoutOpen, FallbackValue=False}" x:Name="AddNewPlayerFlyout" Position="Right" Header="Add new player" Width="300">
+            <StackPanel Margin="15,0">
+                <!-- Disable all child controls if login successful -->
+                <!-- To do this, we can just disable the entire stackpanel, -->
+                <!-- meaning that no components will be able to be clicked -->
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Setter Property="IsHitTestVisible" Value="True"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Ongoing}">
+                                <Setter Property="IsHitTestVisible" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Completed}">
+                                <Setter Property="IsHitTestVisible" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <!-- Now for the controls -->
+                <TextBlock TextWrapping="Wrap">
+                    <Run Text="In this lobby,"/>
+                    <Run Text="{Binding Players.Count, Mode=OneWay}"/>
+                    <Run Text="of 6 available player slots are currently occupied - plenty of space for another. Complete the details below to add a new player."/>
+                </TextBlock>
+                <TextBlock Margin="0,3" Foreground="DarkGray" TextWrapping="Wrap">
+                    <Run Text="Caution: passwords are currently"/>
+                    <Run Text="not" FontWeight="Bold"/>
+                    <Run Text="encrypted. When registering,"/>
+                    <Run Text="do not use your real password." FontWeight="DemiBold"/>
+                </TextBlock>
+                <!-- Determine whether new player is a guest or has an account -->
+                <Grid Margin="0,10,0,13">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <RadioButton Content="Online player" Grid.Column="0" Background="Transparent" x:Name="OnlinePlayerRadioBtn" />
+                    <RadioButton Content="Guest" Grid.Column="1" Background="Transparent"/>
+                </Grid>
+                <!-- Add login section (if login required - online account selected) -->
+                <StackPanel>
+                    <!-- Determine whether or not the login section should be displayed -->
+                    <StackPanel.Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Height" Value="0"/>
+                            <Setter Property="MaxHeight" Value="102"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=OnlinePlayerRadioBtn, Path=IsChecked}" Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                 Storyboard.TargetProperty="Height"
+                                                 From="0" To="165" Duration="0:0:0.3"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                 Storyboard.TargetProperty="Height"
+                                                 From="165" To="0" Duration="0:0:0.3"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=RegisteringNewAccountBtn, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                    <!-- If the additional option is extended, allow the whole thing to extend -->
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                 Storyboard.TargetProperty="MaxHeight" 
+                                                 From="102" To="165" Duration="0:0:0.2"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                 Storyboard.TargetProperty="MaxHeight" 
+                                                 From="165" To="102" Duration="0:0:0.2"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <!-- Add controls -->
+                    <TextBox x:Name="LoginUsername" mah:TextBoxHelper.Watermark="Account username" MaxLength="12"/>
+                    <PasswordBox x:Name="LoginPassword" Margin="0,5,0,0" mah:TextBoxHelper.Watermark="Account password" Style="{DynamicResource MahApps.Styles.PasswordBox.Button.Revealed}"/>
+                    <CheckBox x:Name="RegisteringNewAccountBtn" Margin="0,5" IsChecked="False" Content="I am registering a new account"/>
+                    <Grid Margin="0">
+                        <!-- This should only be shown if it is needed! Hence, do another binding -->
+                        <Grid.Style>
+                            <Style TargetType="{x:Type Grid}">
+                                <Setter Property="Height" Value="0"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=RegisteringNewAccountBtn, Path=IsChecked}" Value="True">
+                                        <DataTrigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation
+                                                 Storyboard.TargetProperty="Height"
+                                                 From="0" To="63" Duration="0:0:0.2" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.EnterActions>
+                                        <DataTrigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard FillBehavior="HoldEnd">
+                                                    <DoubleAnimation
+                                                 Storyboard.TargetProperty="Height"
+                                                 From="63" To="0" Duration="0:0:0.2" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.ExitActions>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <!-- Add the relevant controls -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="26"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <!-- First row -->
+                        <TextBox x:Name="RegisterFirstNames" mah:TextBoxHelper.Watermark="First name(s)" Height="24" Grid.Column="0"/>
+                        <TextBox x:Name="RegisterSurnames" mah:TextBoxHelper.Watermark="Surname(s)" Height="24" Grid.Column="2"/>
+                        <!-- Second row -->
+                        <TextBox x:Name="RegisterEmail" mah:TextBoxHelper.Watermark="Email address" Height="24" Margin="0,0,0,5" Grid.ColumnSpan="3" Grid.Row="2"/>
+                    </Grid>
+                    <!-- Determine login controls below (i.e. indicator for if logged in or not) -->
+                    <DockPanel>
+                        <Border Background="#252525" BorderBrush="#B9B9B9" BorderThickness="1" Width="18" Height="17" Margin="0,0,5,0">
+                            <icons:PackIconMaterial Height="12" Width="12" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <!-- Determine styles (trigger allocations) -->
+                                <icons:PackIconMaterial.Style>
+                                    <Style TargetType="{x:Type icons:PackIconMaterial}">
+                                        <Setter Property="Foreground" Value="#98a49f"/>
+                                        <Setter Property="Kind" Value="Close"/>
+                                        <Style.Triggers>
+                                            <!-- For people that are trying to log in or register -->
+                                            <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Ongoing}">
+                                                <Setter Property="Kind" Value="Clock"/>
+                                            </DataTrigger>
+                                            <!-- For people that have logged in succesfully -->
+                                            <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Completed}">
+                                                <Setter Property="Foreground" Value="#33A133"/>
+                                                <Setter Property="Kind" Value="Check"/>
+                                            </DataTrigger>
+                                            <!-- If a login/register attempt fails due to e.g. lack of internet -->
+                                            <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Failed}">
+                                                <Setter Property="Foreground" Value="Red"/>
+                                                <Setter Property="Kind" Value="Alert"/>
+                                            </DataTrigger>
+                                            <!-- If a login/register attempt is terminated due to incorrect credidentials -->
+                                            <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Terminated}">
+                                                <Setter Property="Foreground" Value="Red"/>
+                                                <Setter Property="Kind" Value="Close"/>
+                                            </DataTrigger>
+                                            <!-- If the player could not be added to the lobby because of a pre-existing player -->
+                                            <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Unavailable}">
+                                                <Setter Property="Foreground" Value="Red"/>
+                                                <Setter Property="Kind" Value="Close"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </icons:PackIconMaterial.Style>
+                            </icons:PackIconMaterial>
+                        </Border>
+                        <TextBlock Margin="1,0,0,0">
+                            <TextBlock.Style>
+                                <!-- Determine styles (trigger allocations) -->
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Foreground" Value="#98a49f"/>
+                                    <Setter Property="Text" Value="User not yet logged in"/>
+                                    <Style.Triggers>
+                                        <!-- For people that are trying to log in-->
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Ongoing}"/>
+                                                <Condition Binding="{Binding ElementName=RegisteringNewAccountBtn, Path=IsChecked}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.Setters>
+                                                <Setter Property="Text" Value="Trying to log you in..."/>
+                                            </MultiDataTrigger.Setters>
+                                        </MultiDataTrigger>
+                                        <!-- For people that are trying to register -->
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Ongoing}"/>
+                                                <Condition Binding="{Binding ElementName=RegisteringNewAccountBtn, Path=IsChecked}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.Setters>
+                                                <Setter Property="Text" Value="Trying to register you..."/>
+                                            </MultiDataTrigger.Setters>
+                                        </MultiDataTrigger>
+                                        <!-- For people that have logged in succesfully -->
+                                        <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Completed}">
+                                            <Setter Property="Foreground" Value="#33A133"/>
+                                            <Setter Property="Text" Value="Credidentials verified"/>
+                                        </DataTrigger>
+                                        <!-- If a login/register attempt fails due to e.g. lack of internet -->
+                                        <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Failed}">
+                                            <Setter Property="Foreground" Value="Red"/>
+                                            <Setter Property="Text" Value="Couldn't connect to our database"/>
+                                        </DataTrigger>
+                                        <!-- If a login/register attempt is terminated due to incorrect credidentials -->
+                                        <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Terminated}">
+                                            <Setter Property="Foreground" Value="Red"/>
+                                            <Setter Property="Text" Value="Username or password incorrect"/>
+                                        </DataTrigger>
+                                        <!-- If the player could not be added to the lobby because of a pre-existing player -->
+                                        <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Unavailable}">
+                                            <Setter Property="Foreground" Value="Red"/>
+                                            <Setter Property="Text" Value="A player already exists with those details/icon"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </DockPanel>
+                    <!-- Buttons to register/login etc. -->
+                </StackPanel>
+                
+                <!-- Add the guest section (if login NOT required - online account NOT selected) -->
+                <StackPanel Background="Black">
+                    <!-- Determine whether or not the login section should be displayed -->
+                    <StackPanel.Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Height" Value="0"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=OnlinePlayerRadioBtn, Path=IsChecked}" Value="False">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                 Storyboard.TargetProperty="Height"
+                                                 From="0" To="26" Duration="0:0:0.3"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard FillBehavior="HoldEnd">
+                                                <DoubleAnimation
+                                                 Storyboard.TargetProperty="Height"
+                                                 From="26" To="0" Duration="0:0:0.3"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <!-- Add controls -->
+                    <TextBox x:Name="GuestUsername" mah:TextBoxHelper.Watermark="Player name" MaxLength="12"/>
+                </StackPanel>
+                
+                <!-- Add controls which are relevant no matter what -->
+                <ComboBox x:Name="IconSelectBox" SelectedIndex="-1" Margin="0,5,0,0" Height="26" mah:TextBoxHelper.Watermark="Select an icon">
+                    <ComboBox.Resources>
+                        <Style TargetType="{x:Type Image}">
+                            <Setter Property="Width" Value="16"/>
+                            <Setter Property="Height" Value="16"/>
+                            <Setter Property="Margin" Value="0,0,5,0"/>
+                        </Style>
+                    </ComboBox.Resources>
+                    <!-- Add the items! -->
+                    <ComboBoxItem>
+                        <DockPanel>
+                            <Image Source="/Monopoly;component/Resources/Tokens/Battleship.png"/>
+                            <TextBlock Text="Battleship"/>
+                        </DockPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <DockPanel>
+                            <Image Source="/Monopoly;component/Resources/Tokens/Boot.png"/>
+                            <TextBlock Text="Boot"/>
+                        </DockPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <DockPanel>
+                            <Image Source="/Monopoly;component/Resources/Tokens/Car.png"/>
+                            <TextBlock Text="Car"/>
+                        </DockPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <DockPanel>
+                            <Image Source="/Monopoly;component/Resources/Tokens/Cat.png"/>
+                            <TextBlock Text="Cat"/>
+                        </DockPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <DockPanel>
+                            <Image Source="/Monopoly;component/Resources/Tokens/Dog.png"/>
+                            <TextBlock Text="Dog"/>
+                        </DockPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <DockPanel>
+                            <Image Source="/Monopoly;component/Resources/Tokens/Thimble.png"/>
+                            <TextBlock Text="Thimble"/>
+                        </DockPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <DockPanel>
+                            <Image Source="/Monopoly;component/Resources/Tokens/Top Hat.png"/>
+                            <TextBlock Text="Top Hat"/>
+                        </DockPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <DockPanel>
+                            <Image Source="/Monopoly;component/Resources/Tokens/Wheelbarrow.png"/>
+                            <TextBlock Text="Wheelbarrow"/>
+                        </DockPanel>
+                    </ComboBoxItem>
+                </ComboBox>
+                <!-- Add the actual 'add player' button, which should add the player to the board once all other options are done and dusted with -->
+                <mah:Tile Margin="0,5,0,0" Height="26" Width="280" HorizontalContentAlignment="Right" HorizontalAlignment="Right">
+                    <!-- The Command being triggered differs on the content of the button. Account for this. -->
+                    <mah:Tile.Style>
+                        <Style TargetType="{x:Type mah:Tile}">
+                            <Setter Property="Command" Value="{Binding Login}"/>
+                            <Setter Property="CommandParameter">
+                                <Setter.Value>
+                                    <MultiBinding Converter="{StaticResource ParameterCompilerConverter}">
+                                        <Binding ElementName="LoginUsername" Path="Text"/>
+                                        <Binding ElementName="LoginPassword"/>
+                                        <Binding ElementName="IconSelectBox" Path="SelectedIndex"/>
+                                    </MultiBinding>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <!-- We are registering a new account -->
+                                <DataTrigger Binding="{Binding ElementName=RegisteringNewAccountBtn, Path=IsChecked}" Value="True">
+                                    <Setter Property="Command" Value="{Binding Register}"/>
+                                    <Setter Property="CommandParameter">
+                                        <Setter.Value>
+                                            <MultiBinding Converter="{StaticResource ParameterCompilerConverter}">
+                                                <Binding ElementName="LoginUsername" Path="Text"/>
+                                                <Binding ElementName="LoginPassword"/>
+                                                <Binding ElementName="RegisterFirstNames" Path="Text"/>
+                                                <Binding ElementName="RegisterSurnames" Path="Text"/>
+                                                <Binding ElementName="RegisterEmail" Path="Text"/>
+                                                <Binding ElementName="IconSelectBox" Path="SelectedIndex"/>
+                                            </MultiBinding>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                                <!-- But, if they're logging in as a guest -->
+                                <DataTrigger Binding="{Binding ElementName=OnlinePlayerRadioBtn, Path=IsChecked}" Value="False">
+                                    <Setter Property="Command" Value="{Binding JoinAsGuest}"/>
+                                    <Setter Property="CommandParameter">
+                                        <Setter.Value>
+                                            <MultiBinding Converter="{StaticResource ParameterCompilerConverter}">
+                                                <Binding ElementName="GuestUsername" Path="Text"/>
+                                                <Binding ElementName="IconSelectBox" Path="SelectedIndex"/>
+                                            </MultiBinding>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                                <!-- Ultimately, however, if the login/registering phase is either ONGOING or COMPLETED (successful), the button should be completely disabled -->
+                                <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Ongoing}">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Completed}">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </mah:Tile.Style>
+                    <!-- Add in the visual components (e.g. text and icon) -->
+                    <DockPanel VerticalAlignment="Center" LastChildFill="False">
+                        <TextBlock>
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Text" Value="Login and join lobby"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=RegisteringNewAccountBtn, Path=IsChecked}" Value="True">
+                                            <Setter Property="Text" Value="Register and join lobby"/>
+                                        </DataTrigger>
+                                        <!-- But, if they're logging in as a guest -->
+                                        <DataTrigger Binding="{Binding ElementName=OnlinePlayerRadioBtn, Path=IsChecked}" Value="False">
+                                            <Setter Property="Text" Value="Join as a guest"/>
+                                        </DataTrigger>
+                                        <!-- But, if the button cannot be selected and is not enabled, show this message instead -->
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Text" Value="Not ready to join the lobby yet"/>
+                                        </Trigger>
+                                        <!-- Ultimately, however, if the login/registering phase is either ONGOING or COMPLETED (successful), the button should be positive! -->
+                                        <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Ongoing}">
+                                            <Setter Property="Text" Value="Trying to log you in now"/>
+                                        </DataTrigger>
+                                        <!-- If they're logged in! -->
+                                        <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Completed}">
+                                            <Setter Property="Text" Value="Adding new player to the lobby"/>
+                                        </DataTrigger>
+                                        <!-- If the player could not be added to the lobby because of a pre-existing player -->
+                                        <DataTrigger Binding="{Binding LoginStatus}" Value="{x:Static parent:Status.Unavailable}">
+                                            <Setter Property="Text" Value="Those details/icon are in use! Try again..."/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <icons:PackIconMaterial Margin="5,0" Kind="AccountPlus"/>
+                    </DockPanel>
+                </mah:Tile>
+            </StackPanel>
+        </mah:Flyout>
+    </Grid>
+</mah:MetroWindow>
