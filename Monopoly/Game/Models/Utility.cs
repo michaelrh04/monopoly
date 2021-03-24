@@ -38,7 +38,7 @@ namespace Monopoly.Game
             {
                 multiplier = MonopolyWindowViewModel.Handler.BoardConfiguration.UtilityMultipliers[1];
             }
-            return multiplier * (MonopolyWindowViewModel.Handler.RollOne + MonopolyWindowViewModel.Handler.RollTwo);
+            return multiplier * (MonopolyWindowViewModel.Handler.Roll.Item1 + MonopolyWindowViewModel.Handler.Roll.Item2);
         }
         #endregion
 

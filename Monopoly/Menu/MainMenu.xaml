@@ -28,18 +28,18 @@
     <mah:MetroWindow.IconTemplate>
         <DataTemplate>
             <Grid Background="#22000000" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-                <Image Source="/Monopoly;component/Resources/Images/IconInset.png" Margin="3"/>
+                <Image Source="/Monopoly;component/Resources/Images/IconWhiteout.png" Margin="3"/>
             </Grid>
         </DataTemplate>
     </mah:MetroWindow.IconTemplate>
     <!-- Buttons within the RIGHT SIDE of the titlebar -->
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
-            <Button>
-                <icons:PackIconMaterial Kind="Cog"/>
-            </Button>
-            <Button>
-                <icons:PackIconMaterial Kind="Recycle"/>
+            <Button Command="{Binding OpenEditor}">
+                <DockPanel>
+                    <icons:PackIconMaterial Kind="Pencil"/>
+                    <TextBlock Text=" Open editor"/>
+                </DockPanel>
             </Button>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
@@ -207,7 +207,7 @@
                                                 </Style>
                                             </mah:Tile.Style>
                                             <mah:Tile.ToolTip>
-                                                <TextBlock Text="Account is logged in and connected to our servers."/>
+                                                <TextBlock Text="This user is logged into an account."/>
                                             </mah:Tile.ToolTip>
                                         </mah:Tile>
                                         <mah:Tile>
@@ -225,7 +225,7 @@
                                                 <TextBlock Text="This player is a guest (account not logged in)."/>
                                             </mah:Tile.ToolTip>
                                         </mah:Tile>
-                                        <mah:Tile>
+                                        <!--<mah:Tile> NOT NEEDED: STATISTICS NOT IMPLEMENTED
                                             <icons:PackIconMaterial Kind="Finance"/>
                                             <mah:Tile.Style>
                                                 <Style BasedOn="{StaticResource PlayerOption}" TargetType="{x:Type mah:Tile}">
@@ -239,7 +239,7 @@
                                             <mah:Tile.ToolTip>
                                                 <TextBlock Text="This game will count towards the user's account statistics."/>
                                             </mah:Tile.ToolTip>
-                                        </mah:Tile>
+                                        </mah:Tile>-->
                                     </StackPanel>
                                     <!-- Draw the bottom figure (piece) -->
                                     <Image Source="{Binding Icon, Converter={StaticResource LobbyImageConverter}}" VerticalAlignment="Bottom" Grid.Row="2"/>
@@ -359,7 +359,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </mah:Tile>
-            <mah:Tile Background="{DynamicResource MahApps.Brushes.Accent2}" Grid.Column="3" Grid.Row="9" Width="64" Height="24" VerticalAlignment="Bottom" Style="{StaticResource SidebarButtonStyle}">
+            <mah:Tile  Command="{Binding OpenEditor}" Background="{DynamicResource MahApps.Brushes.Accent2}" Grid.Column="3" Grid.Row="9" Width="64" Height="24" VerticalAlignment="Bottom" Style="{StaticResource SidebarButtonStyle}">
                 <icons:PackIconMaterial Kind="MapMarkerPlusOutline" Height="18" Width="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </mah:Tile>
             <!-- Footer content -->
@@ -458,9 +458,10 @@
                     </Button>
                 </Viewbox>
                 <TextBlock Text="Available boards" FontSize="16" Margin="0,7.5,0,0"/>
-                <TextBlock Text="Click on any board in this list and close the flyout to select it for your new game. Don't see your board here? Ensure it is in your Documents' boards folder and that it is correctly formatted." Margin="0,0,0,7.5" Foreground="DarkGray" TextWrapping="Wrap" FontSize="12"/>
+                <TextBlock Text="Click on any board in this list and close the flyout to select it for your new game. Don't see your board here? Ensure it is in your Documents' boards folder and that it is correctly formatted." Margin="0,0,0,2.5" Foreground="DarkGray" TextWrapping="Wrap" FontSize="12"/>
+                <TextBlock Text="You may need to restart the program to view boards newly added to your 'Documents' folder." Margin="0,0,0,10" Foreground="DarkGray" TextWrapping="Wrap" FontWeight="Bold" FontSize="12"/>
                 <ScrollViewer>
-                <ItemsControl ItemsSource="{Binding AvailableBoards}">
+                <ItemsControl ItemsSource="{Binding AvailableBoards}" Margin="0">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel/>
@@ -468,7 +469,7 @@
                     </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Viewbox Height="70" HorizontalAlignment="Left">
+                                <Viewbox Height="70" HorizontalAlignment="Left" Margin="0,0,0,10">
                                     <Button Padding="5" Command="{Binding DataContext.SelectBoard, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mah:MetroWindow}}}" CommandParameter="{Binding}">
                                         <StackPanel>
                                             <TextBlock Text="{Binding Name}" FontSize="16"/>

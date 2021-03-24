@@ -78,7 +78,13 @@ namespace Monopoly.Game
         public abstract void Land(Player player);
         public void Depart(Player player)
         {
-            Occupants.Remove(player);
+            try
+            {
+                Occupants.Remove(player);
+            } catch
+            {
+                // Player already removed. Continue as normal.
+            }
             OnPropertyChanged("Occupants");
         }
         #endregion

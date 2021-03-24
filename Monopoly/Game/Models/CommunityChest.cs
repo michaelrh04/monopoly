@@ -31,7 +31,7 @@ namespace Monopoly.Game
         #region Subroutines
         public override void Land(Player player)
         {
-            //throw new NotImplementedException();
+            MonopolyWindowViewModel.Handler.DrawCard(1);
         }
         #endregion
 

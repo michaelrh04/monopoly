@@ -19,6 +19,7 @@ using Monopoly.Converters;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Reflection;
 
 namespace Monopoly.Game
 {
@@ -38,47 +39,42 @@ namespace Monopoly.Game
         /// <param name="settings">Dictionary of the settings to be used.</param>
         public MonopolyWindowViewModel(IDialogCoordinator instance, MonopolyHandler savefile, string boardDirectory = null, List<Player> players = null, Dictionary<string, object> settings = null)
         {
-            Console.WriteLine("[DEBUG] Constructing the MonopolyWindowViewModel.");
-            // Set the DialogCoordinator to the one define in App.xaml.cs
-            Dialogs = instance;
+            Dialogs = instance; // Set the DialogCoordinator to the one define in App.xaml.cs
             // If a savefile exists, load the savefile.
-            var started = false;
+            var alreadyStarted = false;
             if (savefile != null)
             {
-                Console.WriteLine("[DEBUG] Detected that this is a savegame.");
-                started = true;
-                // Load the savefile.
+                // Load the boardgame and get underway.
+                alreadyStarted = true;
                 Handler = savefile;
                 Handler.ViewModel = this;
             }
             else
             {
-                Console.WriteLine("[DEBUG] Detected that this is a new game.");
                 // This is a new game, hurray!
                 // The new handler...
                 Handler = new MonopolyHandler(this, settings);
                 // ...must load the selected board.
-                Console.WriteLine("[DEBUG] Attempting to load the selected board.");
-                Handler.BoardConfiguration = JsonConvert.DeserializeObject<Gameboard>(File.ReadAllText(boardDirectory));
-                Console.WriteLine("[DEBUG] Attempt to load the selected board signalled as complete.");
-                // ADD ERROR HANDLING HERE.
+                Handler.BoardConfiguration = DeserialisePathIntoGameboard(boardDirectory);
                 // Then, the deseralised BoardConfiguration must be formatted for view. This must be set to equal the Board in the view.
-                Console.WriteLine("[DEBUG] Attempting to format the board.");
                 Handler.Board = Handler.BoardConfiguration.FormatForView();
-                Console.WriteLine("[DEBUG] Attempt to format the board signalled as complete.");
                 // It's time to establish the players.
                 foreach (Player player in players)
                 {
                     Handler.InitPlayer(player);
                 }
+                // Before we start, we must also load and deseralise the chance and community chest cards.
+                // As these are stored in the game resources and made by the programmer, we can assume they do not need error checking.
+                Handler.ChanceCards = JsonConvert.DeserializeObject<Queue<Card>>(File.ReadAllText(Environment.CurrentDirectory + @"\Resources\ChanceCards.json"));
+                Handler.CommunityChestCards = JsonConvert.DeserializeObject<Queue<Card>>(File.ReadAllText(Environment.CurrentDirectory + @"\Resources\CommunityChestCards.json"));
             }
             // Establish visual configuration - board scale, rotations, etc.
+            // We zoom in by 1.05x to allow for movement correlating with the most position.
             BoardScale = 1.05;
             RotateButtonRotation = 360;
             // The board is now ready to go, and the game can begin. 
-            Handler.Start(started);
+            Handler.Start(alreadyStarted);
         }
-        public IDialogCoordinator Dialogs;
         #endregion
 
         #region Command definitions
@@ -132,53 +128,53 @@ namespace Monopoly.Game
                 return new RelayCommand(Handler._NextTurn);
             } 
         }
-        public BoundCanExecuteCommand PayRent
+        public RelayCommand PayRent
         {
             get
             {
-                return new BoundCanExecuteCommand(Handler._PayRent, CanPayRent);
+                return new RelayCommand(Handler._PayRent, null, CanPayRent);
             }
         }
-        public BoundCanExecuteCommand PurchaseProperty
+        public RelayCommand PurchaseProperty
         {
             get
             {
-                return new BoundCanExecuteCommand(Handler._PurchaseProperty, CanPurchaseProperty);
+                return new RelayCommand(Handler._PurchaseProperty, null, CanPurchaseProperty);
             }
         }
-        public BoundCanExecuteCommand DeclineProperty
+        public RelayCommand DeclineProperty
         {
             get
             {
-                return new BoundCanExecuteCommand(Handler._DeclineProperty, CanDeclineProperty);
+                return new RelayCommand(Handler._DeclineProperty, null, CanDeclineProperty);
             }
         }
-        public BoundCanExecuteCommand AddHouse
+        public RelayCommand AddHouse
         {
             get
             {
-                return new BoundCanExecuteCommand(Handler._AddHouse, CanAddHouse);
+                return new RelayCommand(Handler._AddHouse, null, CanAddHouse);
             }
         }
-        public BoundCanExecuteCommand RemoveHouse
+        public RelayCommand RemoveHouse
         {
             get
             {
-                return new BoundCanExecuteCommand(Handler._RemoveHouse, CanRemoveHouse);
+                return new RelayCommand(Handler._RemoveHouse, null, CanRemoveHouse);
             }
         }
-        public BoundCanExecuteCommand MortgageProperty
+        public RelayCommand MortgageProperty
         {
             get
             {
-                return new BoundCanExecuteCommand(Handler._ToggleMortgage, CanMortgageProperty);
+                return new RelayCommand(Handler._ToggleMortgage, null, CanMortgageProperty);
             }
         }
-        public BoundCanExecuteCommand UnmortgageProperty
+        public RelayCommand UnmortgageProperty
         {
             get
             {
-                return new BoundCanExecuteCommand(Handler._ToggleMortgage, CanUnmortgageProperty);
+                return new RelayCommand(Handler._ToggleMortgage, null, CanUnmortgageProperty);
             }
         }
         public RelayCommand DeclareBankruptcy
@@ -190,50 +186,6 @@ namespace Monopoly.Game
         }
         #endregion
 
-        private bool IsPlayerOnSelectedProperty(Player player)
-        {
-            foreach (Player occupant in SelectedProperty.Occupants)
-            {
-                if (occupant == player)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        private bool IsPlayerSelectedPropertyOwner(Player player)
-        {
-            if(SelectedProperty == null || SelectedProperty.Owner == null || Handler.CurrentPlayer == null) { return false; }
-            return SelectedProperty.Owner == player;
-        }
-        /// <summary>
-        /// Easy subroutine for invoking OnPropertyChanged() for every of the central button options.
-        /// </summary>
-        public void ForcePropertyChanged()
-        {
-            string[] propertyNames = { "SelectedProperty", "PayRent", "PurchaseProperty", "DeclineProperty" };
-            foreach (string propertyName in propertyNames)
-            {
-                OnPropertyChanged(propertyName);
-            }
-            string[] HpropertyNames = { "RollsComplete", "CurrentPlayer", "ActionsUnresolved" };
-            foreach (string propertyName in HpropertyNames)
-            {
-                Handler.OnPropertyChanged(propertyName);
-            }
-            Handler.CurrentPlayer.OnPropertyChanged("Inventory");
-            foreach(Player player in Handler.Players)
-            {
-                player.OnPropertyChanged("Balance");
-                player.OnPropertyChanged("Inventory");
-                player.OnPropertyChanged("InventoryCount");
-            }
-            foreach(Location location in Handler.Board)
-            {
-                // This will only apply to properties but it is worth doing anyway.
-                location.OnPropertyChanged("Owner");
-            }
-        }
         #region Command predicates/requirements
         private bool CanPayRent()
         {
@@ -241,10 +193,10 @@ namespace Monopoly.Game
             // Check this is the property the player is actually on.
             if (!IsPlayerOnSelectedProperty(Handler.CurrentPlayer)) { return false; }
             // Proceed.
-            if(!IsPlayerSelectedPropertyOwner(Handler.CurrentPlayer) && SelectedProperty.Owner != null)
+            if (!IsPlayerSelectedPropertyOwner(Handler.CurrentPlayer) && SelectedProperty.Owner != null)
             {
                 // Check against the rules as well!
-                if(SelectedProperty.Owner.IsJailed && ((bool)Handler.Settings["allow_rent_collection_while_jailed"]) == false)
+                if (SelectedProperty.Owner.IsJailed && ((bool)Handler.Settings["allow_rent_collection_while_jailed"]) == false)
                 {
                     return false;
                 }
@@ -290,9 +242,9 @@ namespace Monopoly.Game
                     // We need to check that the house incrementation rules apply. Check this first.
                     if (((bool)Handler.Settings["allow_uneven_house_construction"]) == false)
                     {
-                        foreach(Residence setMember in Handler.BoardConfiguration.Residences[res.Set])
+                        foreach (Residence setMember in Handler.BoardConfiguration.Residences[res.Set])
                         {
-                            if((setMember.Houses != res.Houses && setMember.Houses != res.Houses + 1) || setMember.Owner != Handler.CurrentPlayer)
+                            if ((setMember.Houses != res.Houses && setMember.Houses != res.Houses + 1) || setMember.Owner != Handler.CurrentPlayer)
                             {
                                 return false;
                             }
@@ -301,17 +253,17 @@ namespace Monopoly.Game
                     // Now that we know adding a house/hotel is theoretically possible, we should check that the capacity is available:
                     if ((bool)Handler.Settings["limit_house_hotel_numbers"])
                     {
-                        if(res.Houses == 5)
+                        if (res.Houses == 5)
                         {
                             return Handler.GetHotelsAvailable() > 0;
-                        } 
+                        }
                         else
                         {
                             return Handler.GetHousesAvailable() > 0;
                         }
                     }
                     // And can they afford it?
-                    if(Handler.CurrentPlayer.Balance < ((Residence)SelectedProperty).HouseIncrementationPrice)
+                    if (Handler.CurrentPlayer.Balance < ((Residence)SelectedProperty).HouseIncrementationPrice)
                     {
                         return false;
                     }
@@ -386,15 +338,81 @@ namespace Monopoly.Game
         }
         #endregion
 
-        #region Public properties
+        #region Properties
         /// <summary>
         /// The MonopolyHandler handles all game management (allowing for easy saving/loading). The role of the ViewModel is to communicate graphical updates to the view and game updates to the handler.
         /// </summary>
         public static MonopolyHandler Handler { get; set; }
+        /// <summary>
+        /// Dialog coordinator for this ViewModel.
+        /// </summary>
+        public IDialogCoordinator Dialogs;
+        /// <summary>
+        /// Static class for string deserlisation (into Gameboard type).
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static Gameboard DeserialisePathIntoGameboard(string path)
+        {
+            return JsonConvert.DeserializeObject<Gameboard>(File.ReadAllText(path));
+        }
         #endregion
 
-        #region Private properties
-
+        #region Functional subroutines
+        /// <summary>
+        /// Returns true/false depending on whether or not the given player is on SelectedProperty.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        private bool IsPlayerOnSelectedProperty(Player player)
+        {
+            foreach (Player occupant in SelectedProperty.Occupants)
+            {
+                if (occupant == player)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        /// <summary>
+        /// Checks if parameter player owns SelectedProperty.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        private bool IsPlayerSelectedPropertyOwner(Player player)
+        {
+            if (SelectedProperty == null || SelectedProperty.Owner == null || Handler.CurrentPlayer == null) { return false; }
+            return SelectedProperty.Owner == player;
+        }
+        /// <summary>
+        /// Easy subroutine for invoking OnPropertyChanged() for every of the central button options.
+        /// </summary>
+        public void ForcePropertyChanged()
+        {
+            string[] propertyNames = { "SelectedProperty", "PayRent", "PurchaseProperty", "DeclineProperty" };
+            foreach (string propertyName in propertyNames)
+            {
+                OnPropertyChanged(propertyName);
+            }
+            string[] HpropertyNames = { "RollsComplete", "CurrentPlayer", "ActionsUnresolved" };
+            foreach (string propertyName in HpropertyNames)
+            {
+                Handler.OnPropertyChanged(propertyName);
+            }
+            Handler.CurrentPlayer.OnPropertyChanged("Inventory");
+            foreach (Player player in Handler.Players)
+            {
+                player.OnPropertyChanged("Balance");
+                player.OnPropertyChanged("Inventory");
+                player.OnPropertyChanged("InventoryCount");
+            }
+            foreach (Location location in Handler.Board)
+            {
+                // This will only apply to properties but it is worth doing anyway.
+                location.OnPropertyChanged("Owner");
+            }
+        }
         #endregion
 
         #region Visual handling

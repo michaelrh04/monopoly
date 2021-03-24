@@ -184,17 +184,28 @@
     </Compile>
     <Compile Include="Converters\DiceNumberConverter.cs" />
     <Compile Include="Converters\EqualityConverter.cs" />
+    <Compile Include="Editor\EditorWindow.xaml.cs">
+      <DependentUpon>EditorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\EditorWindowViewModel.cs" />
+    <Compile Include="Editor\Models\GenericEditorItem.cs" />
+    <Compile Include="Game\Models\Card.cs" />
     <Compile Include="Game\Models\Converters\IconEnabledColourConverter.cs" />
     <Compile Include="Game\Models\Dummy.cs" />
+    <Compile Include="Game\Models\Enumeration\EnumCardType.cs" />
     <Compile Include="Game\Models\Enumeration\EnumDummyType.cs" />
     <Compile Include="Game\Models\Location.cs" />
     <Compile Include="Game\MonopolyHandler.cs" />
     <Compile Include="Converters\ImageConverter.cs" />
     <Compile Include="Menu\BoardData.cs" />
     <Compile Include="Menu\Converters\ParameterCompilerConverter.cs" />
-    <Compile Include="Models\BoundCanExecuteCommand.cs" />
+    <Compile Include="Models\RelayCommand.cs" />
     <Compile Include="Models\StatusEnum.cs" />
     <Compile Include="Users\Player.cs" />
+    <Page Include="Editor\EditorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Game\MonopolyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -212,7 +223,6 @@
     <Compile Include="Game\Models\FreeParking.cs" />
     <Compile Include="Game\Models\Jail.cs" />
     <Compile Include="Game\Models\Go.cs" />
-    <Compile Include="Models\RelayCommand.cs" />
     <Compile Include="Game\Models\Converters\BoardColumnConverter.cs" />
     <Compile Include="Game\Models\Enumeration\EnumBoardRotateMode.cs" />
     <Compile Include="Game\Models\Converters\BoardRowConverter.cs" />
@@ -248,13 +258,19 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\Boards\UK Classic Board.json" />
+    <None Include="Resources\CommunityChestCards.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\ChanceCards.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -264,9 +280,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\IconInset.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Tokens\Battleship.png" />
@@ -293,7 +306,7 @@
     <Resource Include="Resources\Tokens\Wheelbarrow.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\Logo.png" />
+    <Resource Include="Resources\Images\IconWhiteout.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

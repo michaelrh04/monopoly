@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\micha\OneDrive\Development\Coursework\Programming\Monopoly\Monopoly\App.xaml
-2-1800244370
+3-700930758
 
-41-1026608953
+45972753581
 110-24011823
-Game\MonopolyWindow.xaml;Menu\MainMenu.xaml;
+Editor\EditorWindow.xaml;Game\MonopolyWindow.xaml;Menu\MainMenu.xaml;
 
-True
+False
 

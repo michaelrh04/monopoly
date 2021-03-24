@@ -27,9 +27,12 @@ namespace Monopoly
             RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
 
             // Let's go!
-            Menu.MainMenu mainMenu = new Menu.MainMenu();
-            mainMenu.DataContext = new Menu.MainMenuViewModel(DialogCoordinator.Instance);
-            mainMenu.Show();
+            Menu.MainMenu View = new Menu.MainMenu();
+            // Establish an action which allows the VM to close the V and then assign the VM.
+            var ViewModel = new Menu.MainMenuViewModel(DialogCoordinator.Instance);
+            ViewModel.Close = new Action(() => View.Close());
+            View.DataContext = ViewModel;
+            View.Show();
         }
     }
 }

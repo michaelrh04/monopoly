@@ -1,0 +1,127 @@
+﻿[
+	{
+		"Type": 2,
+		"TargetsPlayers": false,
+		"Amounts": null,
+		"Text": "Go to jail. Move directly; do not pass go. Do not collect £200."
+	},
+	{
+		"Type": 3,
+		"TargetsPlayers": false,
+		"Amounts": [
+			50
+		],
+		"Text": "Pay your insurance premium, £50."
+	},
+	{
+		"Type": 3,
+		"TargetsPlayers": false,
+		"Amounts": [
+			50
+		],
+		"Text": "Doctor's fee; pay £50."
+	},
+	{
+		"Type": 3,
+		"TargetsPlayers": false,
+		"Amounts": [
+			100
+		],
+		"Text": "Pay your hospital fees, £100."
+	},
+	{
+		"Type": 4,
+		"TargetsPlayers": false,
+		"Amounts": [
+			10,
+			0
+		],
+		"Text": "Pay a £10 fine or take a \"CHANCE\"."
+	},
+	{
+		"Type": 5,
+		"TargetsPlayers": false,
+		"Amounts": [
+			100
+		],
+		"Text": "Annuity matures. Collect £100."
+	},
+	{
+		"Type": 5,
+		"TargetsPlayers": false,
+		"Amounts": [
+			10
+		],
+		"Text": "You have won second prize in a beauty contest. Collect £10."
+	},
+	{
+		"Type": 5,
+		"TargetsPlayers": false,
+		"Amounts": [
+			50
+		],
+		"Text": "You recieve £50 from a sale of stock."
+	},
+	{
+		"Type": 5,
+		"TargetsPlayers": false,
+		"Amounts": [
+			20
+		],
+		"Text": "Income tax refund: collect £20."
+	},
+	{
+		"Type": 5,
+		"TargetsPlayers": false,
+		"Amounts": [
+			100
+		],
+		"Text": "You inherit £100."
+	},
+	{
+		"Type": 5,
+		"TargetsPlayers": false,
+		"Amounts": [
+			200
+		],
+		"Text": "Bank error in your favour. Collect £200."
+	},
+	{
+		"Type": 5,
+		"TargetsPlayers": false,
+		"Amounts": [
+			25
+		],
+		"Text": "Recieve £25 interest on your 7% preference shares."
+	},
+	{
+		"Type": 5,
+		"TargetsPlayers": true,
+		"Amounts": [
+			10
+		],
+		"Text": "It is your birthday. Collect £10 from each player."
+	},
+	{
+		"Type": 0,
+		"TargetsPlayers": false,
+		"Amounts": [
+			0
+		],
+		"Text": "Advance to \"Go\"!"
+	},
+	{
+		"Type": 1,
+		"TargetsPlayers": false,
+		"Amounts": [
+			1
+		],
+		"Text": "Go back to %1%."
+	},
+	{
+		"Type": 6,
+		"TargetsPlayers": false,
+		"Amounts": null,
+		"Text": "GET OUT OF JAIL FREE. This card may be kept until needed or sold."
+	}
+]

@@ -1,0 +1,128 @@
+﻿[
+	{
+		"Type": 2,
+		"TargetsPlayers": false,
+		"Amounts": null,
+		"Text": "Go to jail. Move directly; do not pass go. Do not collect £200."
+	},
+	{
+		"Type": 0,
+		"TargetsPlayers": false,
+		"Amounts": [
+			15
+		],
+		"Text": "Take a trip to %15%!"
+	},
+	{
+		"Type": 0,
+		"TargetsPlayers": false,
+		"Amounts": [
+			11
+		],
+		"Text": "Advance to %11%."
+	},
+	{
+		"Type": 0,
+		"TargetsPlayers": false,
+		"Amounts": [
+			39
+		],
+		"Text": "Advance to %39%."
+	},
+	{
+		"Type": 0,
+		"TargetsPlayers": false,
+		"Amounts": [
+			0
+		],
+		"Text": "Advance to \"Go\"!"
+	},
+	{
+		"Type": 0,
+		"TargetsPlayers": false,
+		"Amounts": [
+			24
+		],
+		"Text": "Advance to %24%."
+	},
+	{
+		"Type": 1,
+		"TargetsPlayers": false,
+		"Amounts": [
+			-3
+		],
+		"Text": "Go back three spaces."
+	},
+	{
+		"Type": 3,
+		"TargetsPlayers": false,
+		"Amounts": [
+			40,
+			115
+		],
+		"Text": "You are assessed for street repairs. You must pay £40 per house and £115 per hotel owned."
+	},
+	{
+		"Type": 3,
+		"TargetsPlayers": false,
+		"Amounts": [
+			15
+		],
+		"Text": "Speeding fine: £15."
+	},
+	{
+		"Type": 3,
+		"TargetsPlayers": false,
+		"Amounts": [
+			25,
+			100
+		],
+		"Text": "Make general repairs on all of your houses. You must pay £25 per house and £100 per hotel owned."
+	},
+	{
+		"Type": 3,
+		"TargetsPlayers": false,
+		"Amounts": [
+			20
+		],
+		"Text": "You recieve a £20 fine for driving under the influence of alcohol."
+	},
+	{
+		"Type": 3,
+		"TargetsPlayers": false,
+		"Amounts": [
+			150
+		],
+		"Text": "Pay school fees of £150."
+	},
+	{
+		"Type": 5,
+		"TargetsPlayers": false,
+		"Amounts": [
+			100
+		],
+		"Text": "You have won a crossword competition. Collect £100."
+	},
+	{
+		"Type": 5,
+		"TargetsPlayers": false,
+		"Amounts": [
+			50
+		],
+		"Text": "The bank pays you a dividend of £50."
+	},
+	{
+		"Type": 5,
+		"TargetsPlayers": false,
+		"Amounts": [
+			150
+		],
+		"Text": "Your building loan matures. Collect £150."
+	},
+	{
+		"Type": 6,
+		"TargetsPlayers": false,
+		"Amounts": null,
+		"Text": "GET OUT OF JAIL FREE. This card may be kept until needed or sold."
+	}
+]

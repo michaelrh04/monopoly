@@ -13,10 +13,11 @@ using System.Windows.Media;
 
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
-using Monopoly.Game;
-using MySql.Data;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
+
+using Monopoly.Game;
+using Monopoly.Editor;
 
 namespace Monopoly.Menu
 {
@@ -42,6 +43,7 @@ namespace Monopoly.Menu
         #endregion
 
         #region Public definitions
+        public Action Close { get; set; }
         public RelayCommand RemovePlayer 
         { 
             get
@@ -61,6 +63,13 @@ namespace Monopoly.Menu
             get
             {
                 return new RelayCommand(_ClearList);
+            }
+        }
+        public RelayCommand OpenEditor
+        {
+            get
+            {
+                return new RelayCommand(_OpenEditor);
             }
         }
         public Dictionary<string, object> Settings
@@ -229,8 +238,19 @@ namespace Monopoly.Menu
                 try
                 {
                     sqlConnection.Open();
-                    // To inquire, we need to find the result where both username and password are given correctly
-                    string query = @"INSERT INTO `accounts` (`key`, `username`, `email`, `password`, `firstname`, `surname`) VALUES (NULL, '" + details[0] + "', '" + details[4] + "', '" + ((PasswordBox)details[1]).Password + "', '" + details[2] + "', '" + details[3] + "');";
+                    // First, we need to check that neither USERNAME nor EMAIL (only) are in use.
+                    // We can do this by checking for any result that matches either query.
+                    string duplicationCheck = @"SELECT * FROM `accounts` WHERE `username` = '" + details[0] + "' OR `email` = '" + details[4] + "'";
+                    MySqlCommand check = new MySqlCommand(duplicationCheck, sqlConnection);
+                    if(check.ExecuteScalar() != null)
+                    {
+                        // Details exist. This is not a possible registration.
+                        LoginStatus = Status.Unavailable;
+                        sqlConnection.Close();
+                        return;
+                    }
+                    // We should now write to the server. The primary key (key) will be autoincremented database-side.
+                    string query = @"INSERT INTO `accounts` (`username`, `email`, `password`, `firstname`, `surname`) VALUES ('" + details[0] + "', '" + details[4] + "', '" + ((PasswordBox)details[1]).Password + "', '" + details[2] + "', '" + details[3] + "');";
                     MySqlCommand addition = new MySqlCommand(query, sqlConnection);
                     addition.ExecuteNonQuery();
                     sqlConnection.Close();
@@ -392,20 +412,21 @@ namespace Monopoly.Menu
             if (Players.Count == 0)
             {
                 // We are loading an old game.
-                // Open the file dialog.
-                OpenFileDialog openSavegame = new OpenFileDialog();
-                openSavegame.Filter = "Savegame files (*.monopoly)|*.monopoly";
-                openSavegame.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Monopoly\\Saves";
-                openSavegame.ShowDialog();
-                if (openSavegame.FileName == null)
-                {
-                    return;
-                }
-                FileStream savegame = File.Open(openSavegame.FileName, FileMode.Open);
-                BinaryFormatter formatter = new BinaryFormatter();
-                //It serialize the employee object  
+                // Open the file dialog within a try-catch (to detect for improper closure).
                 try
                 {
+                    OpenFileDialog openSavegame = new OpenFileDialog();
+                    openSavegame.Filter = "Savegame files (*.monopoly)|*.monopoly";
+                    openSavegame.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Monopoly\\Saves";
+                    openSavegame.ShowDialog();
+                    if (openSavegame.FileName == null)
+                    {
+                        return;
+                    }
+                    FileStream savegame = File.Open(openSavegame.FileName, FileMode.Open);
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    //It serialize the employee object  
+
                     object newObject = formatter.Deserialize(savegame);
                     MonopolyHandler handler = (MonopolyHandler)newObject;
                     // Create the new window
@@ -417,17 +438,22 @@ namespace Monopoly.Menu
                     await Task.Delay(1000);
                     if (NewMonopolyWindow.IsActive)
                     {
-                        await Dialogs.ShowMessageAsync(this, "", "Your savefile appears to have loaded successfully. Please close this window.", MessageDialogStyle.Affirmative);
+                        Close();
                     }
                     else
                     {
                         await Dialogs.ShowMessageAsync(this, "", "That savefile appears corrupted or otherwise incompatible with this version of Monopoly. Please try again, load a different savefile, or begin a new game.", MessageDialogStyle.Affirmative);
                     }
-                } catch (ArgumentException)
-                {
-                    await Dialogs.ShowMessageAsync(this, "", "That savefile appears corrupted or otherwise incompatible with this version of Monopoly. Please try again, load a different savefile, or begin a new game.", MessageDialogStyle.Affirmative);
+                    savegame.Close();
                 }
-                savegame.Close();
+                catch (ArgumentException)
+                {
+                    await Dialogs.ShowMessageAsync(this, "", "Please ensure you have selected a savefile compatible with this version of Monopoly.", MessageDialogStyle.Affirmative);
+                }
+            }
+            else if (Players.Count == 1)
+            {
+                return; // Not enough players to begin!
             }
             else
             {
@@ -441,7 +467,7 @@ namespace Monopoly.Menu
                 // Assign DataContext, within the MVVM pattern
                 NewMonopolyWindow.DataContext = new MonopolyWindowViewModel(DialogCoordinator.Instance, null, BoardDirectory, Players.ToList<Player>(), Settings);
                 NewMonopolyWindow.Show();
-                await Dialogs.ShowMessageAsync(this, "", "The game is now running. Please close this window.", MessageDialogStyle.Affirmative);
+                Close();
             }
         }
         /// <summary>
@@ -471,6 +497,18 @@ namespace Monopoly.Menu
             BoardData data = (BoardData)sender;
             BoardDirectory = data.BoardDirectory;
         }
+        /// <summary>
+        /// Allows for the (board) editor to be opened.
+        /// </summary>
+        /// <param name="sender"></param>
+        private void _OpenEditor(object sender)
+        {
+            EditorWindow newEditorWindow = new EditorWindow();
+            EditorWindowViewModel newEditorWindowViewModel = new EditorWindowViewModel(Dialogs);
+            newEditorWindowViewModel.Close = new Action(() => newEditorWindow.Close());
+            newEditorWindow.DataContext = newEditorWindowViewModel;
+            newEditorWindow.Show();
+        }
         #endregion
 
         #region INotifyPropertyChanged implementation
@@ -484,6 +522,8 @@ namespace Monopoly.Menu
         /// <param name="propertyName">The name of the changed property.</param>
         public void OnPropertyChanged(string propertyName)
         {
+            // This is a cheat-y way of continually refreshing the list. I'm doing it anyway.
+            AvailableBoards = GetAvailableBoards();
             var e = new PropertyChangedEventArgs(propertyName);
             if (PropertyChanged != null)
             {

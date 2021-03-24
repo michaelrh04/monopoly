@@ -31,7 +31,7 @@ namespace Monopoly.Game
         #region Subroutines
         public override void Land(Player player)
         {
-            Console.WriteLine("Chance!");
+            MonopolyWindowViewModel.Handler.DrawCard(0);
         }
         #endregion
 

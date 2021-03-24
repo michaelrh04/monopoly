@@ -64,6 +64,17 @@ namespace Monopoly.Game
                 }
             }
         }
+        /// <summary>
+        /// Stores chance cards.
+        /// </summary>
+        public Queue<Card> ChanceCards;
+        /// <summary>
+        /// Stores community chest cards.
+        /// </summary>
+        public Queue<Card> CommunityChestCards;
+        /// <summary>
+        /// Defines whether or not the cover is open,
+        /// </summary>
         public bool CoverOpen
         {
             get
@@ -80,38 +91,20 @@ namespace Monopoly.Game
             }
         }
         /// <summary>
-        /// The first dice number ('roll one').
+        /// A tuple containing both the dice rolls 1 and 2.
         /// </summary>
-        public int RollOne
+        public Tuple<int, int> Roll
         {
             get
             {
-                return _RollOne;
+                return _Roll;
             }
             set
             {
-                if (value != _RollOne)
+                if (value != _Roll)
                 {
-                    _RollOne = value;
-                    OnPropertyChanged("RollOne");
-                }
-            }
-        }
-        /// <summary>
-        /// The second dice number ('roll two').
-        /// </summary>
-        public int RollTwo
-        {
-            get
-            {
-                return _RollTwo;
-            }
-            set
-            {
-                if (value != _RollTwo)
-                {
-                    _RollTwo = value;
-                    OnPropertyChanged("RollTwo");
+                    _Roll = value;
+                    OnPropertyChanged("Roll");
                 }
             }
         }
@@ -122,16 +115,16 @@ namespace Monopoly.Game
         {
             get 
             {
-                if(_RollsRemaining <= 0)
+                if(_RollsRemaining <= 0 || AnimationOngoing)
                 {
-                    // You cannot roll again!
+                    // You cannot roll again/yet!
                     return false;
                 } 
                 else
                 {
                     if(Board[CurrentPlayer.Location] is Property property)
                     {
-                        if (property.Owner == null && HasPaidRent)
+                        if (property.Owner == null || (!HasPaidRent && property.Owner == CurrentPlayer))
                         {
                             // The property is unowned or has rent due! You cannot roll again yet.
                             return false;
@@ -220,8 +213,7 @@ namespace Monopoly.Game
             {
                 if (value != _ActionsUnresolved)
                 {
-                    Console.WriteLine("[DEBUG] Remaining actions attempted set: " + value);
-                    _ActionsUnresolved = (value < 0 ? 0 : value);
+                    _ActionsUnresolved = (value < 0 ? 0 : value); // Do not go below 0
                     OnPropertyChanged("ActionsUnresolved");
                     Console.WriteLine("[DEBUG] Remaining actions unresolved: " + _ActionsUnresolved);
                 }
@@ -271,6 +263,26 @@ namespace Monopoly.Game
                 }
             }
         }
+        /// <summary>
+        /// Defines whether or not the MovePlayer subroutine is conducting an animation.
+        /// </summary>
+        public bool AnimationOngoing
+        {
+            get
+            {
+                return _AnimationOngoing;
+            }
+            set
+            {
+                if (value != _AnimationOngoing)
+                {
+                    _AnimationOngoing = value;
+                    OnPropertyChanged("AnimationOngoing");
+                    OnPropertyChanged("RollsComplete");
+                    OnPropertyChanged("ActionsUnresolved");
+                }
+            }
+        }
         #endregion
 
         #region Commands
@@ -281,25 +293,25 @@ namespace Monopoly.Game
                 return new RelayCommand(_RollDice);
             }
         }
-        public BoundCanExecuteCommand AddBidOne
+        public RelayCommand AddBidOne
         {
             get
             {
-                return new BoundCanExecuteCommand(_IncreaseBid, CanAddBidOne);
+                return new RelayCommand(_IncreaseBid, null, CanAddBidOne);
             }
         }
-        public BoundCanExecuteCommand AddBidTen
+        public RelayCommand AddBidTen
         {
             get
             {
-                return new BoundCanExecuteCommand(_IncreaseBid, CanAddBidTen);
+                return new RelayCommand(_IncreaseBid, null, CanAddBidTen);
             }
         }
-        public BoundCanExecuteCommand AddBidOneHundred
+        public RelayCommand AddBidOneHundred
         {
             get
             {
-                return new BoundCanExecuteCommand(_IncreaseBid, CanAddBidOneHundred);
+                return new RelayCommand(_IncreaseBid, null, CanAddBidOneHundred);
             }
         }
         public RelayCommand WithdrawAuction
@@ -331,13 +343,13 @@ namespace Monopoly.Game
         // For the game controls (e.g. dice rolls).
         public bool HasPaidRent;
         public int CumulativeTaxation;
-        private int _RollOne;
-        private int _RollTwo;
+        private Tuple<int, int> _Roll;
         public int _RollsRemaining;
         private int DoubleRollCounter;
         private int _ActionsUnresolved;
         private bool _AuctionOngoing;
         private bool _GameOver;
+        private bool _AnimationOngoing;
         private ObservableCollection<Tuple<Player, int>> _Bids = new ObservableCollection<Tuple<Player, int>>();
         private List<Player> WithdrawnPlayers = new List<Player>();
         #endregion
@@ -418,8 +430,7 @@ namespace Monopoly.Game
             // Proceed with the rolling
             for (int i = 0; i < 15; i++)
             {
-                RollOne = Randomiser.Next(1, 7);
-                RollTwo = Randomiser.Next(1, 7);
+                Roll = Tuple.Create(Randomiser.Next(1, 7), Randomiser.Next(1, 7));
                 await Task.Delay(visualDelay); 
                 // Make the next visual update take slightly longer.
                 visualDelay += 25;
@@ -427,7 +438,7 @@ namespace Monopoly.Game
             #region Jail double handing
             if (CurrentPlayer.IsJailed)
             {
-                if(RollOne == RollTwo)
+                if(Roll.Item1 == Roll.Item2)
                 {
                     // The player has broken from jail! Do not terminate the process.
                     Jail(false, CurrentPlayer);
@@ -443,7 +454,7 @@ namespace Monopoly.Game
                 }
             } else
             {
-                if(RollOne == RollTwo)
+                if(Roll.Item1 == Roll.Item2)
                 {
                     DoubleRollCounter++;
                     if(DoubleRollCounter == 3)
@@ -456,11 +467,11 @@ namespace Monopoly.Game
             // The final roll has been decided.
             _RollsRemaining = tempRollsRemaining;
             Console.WriteLine("There are now " + _RollsRemaining + " rolls remaining.");
-            int destination = CurrentPlayer.Location + RollOne + RollTwo;
+            int destination = CurrentPlayer.Location + Roll.Item1 + Roll.Item2;
             if(destination > 39) { destination -= 40; }
             // Move the player!
             MovePlayer(CurrentPlayer, CurrentPlayer.Location, destination);
-            if (RollOne != RollTwo)
+            if (Roll.Item1 != Roll.Item2)
             {
                 // Not a double. We can subtract from rolls remaining.
                 _RollsRemaining--; ActionsUnresolved--;
@@ -484,9 +495,14 @@ namespace Monopoly.Game
                 // If it does not equal -1, handle it (this has come from another tile on the board).
                 // From = -1 when the player is being added from nowhere.
                 // Handle animation.
-                ((Location)Board[destination]).Arrive(player);
+                Board[destination].Arrive(player);
                 // This needs no animation; cancel it.
                 return;
+            } 
+            else
+            {
+                // Ensure departure
+                Board[destination].Depart(player);
             }
             // This section makes extensive use of color animations. These can be defined first and used in many situations afterwards.
             ColorAnimation FadeInColour = new ColorAnimation
@@ -511,6 +527,7 @@ namespace Monopoly.Game
             }
             // Loop through all the properties from 'from' to 'destination' to provide that special graphical glow.
             // This gives the impression of a piece in movement.
+            AnimationOngoing = true;
             int destination_loop = destination;
             if(destination < from) { destination_loop += 40; }
             ((Location)Board[destination]).PropertyBackground.BeginAnimation(SolidColorBrush.ColorProperty, FadeInColour);
@@ -555,14 +572,15 @@ namespace Monopoly.Game
                 }
             }
             #endregion
-            
+            AnimationOngoing = false;
+
             //
             //
             //
 
             // Now we need to handle the game mechanics as well.
             // First, has the player passed - but not landed upon - GO? Check for this.
-            if(destination < from && destination != 0)
+            if (destination < from && destination != 0)
             {
                 // The conditions are true!
                 // Grant the player the passing_go_amount.
@@ -594,8 +612,25 @@ namespace Monopoly.Game
                     // Else, the index is taken, try again.
                 }
                 while (successes < Players.Count);
-                Players = tempPlayerList.ToList<Player>();
-                // Start the game.
+                Players = tempPlayerList.ToList();
+                // Then, shuffle the community chest and chance card queues
+                // This may come as a shock to the FIFO structure, but remember that they are only shuffled once and then MUST be kept in a queue
+                // Hence, I believe it is still appropriate to do
+                Random rnd = new Random();
+                Card[] chanceArray = ChanceCards.ToArray<Card>().OrderBy(x => rnd.Next()).ToArray();
+                Card[] cChestArray = CommunityChestCards.ToArray<Card>().OrderBy(x => rnd.Next()).ToArray();
+                // Restock!
+                ChanceCards = new Queue<Card>();
+                CommunityChestCards = new Queue<Card>();
+                foreach(Card chance in chanceArray)
+                {
+                    ChanceCards.Enqueue(chance);
+                }
+                foreach (Card cCard in cChestArray)
+                {
+                    ChanceCards.Enqueue(cCard);
+                }
+                // Start the game!
                 CurrentPlayer = Players[0];
                 Console.WriteLine("[DEBUG] Attempting to start the game.");
                 GameOver = false;
@@ -643,7 +678,7 @@ namespace Monopoly.Game
             _RollsRemaining = 1; OnPropertyChanged("RollsComplete");
             // Since as it is mandatory a person must roll, we also need to set one as ActionsUnresolved.
             ActionsUnresolved = 1;
-            Console.WriteLine("[DEBUG] Selection complete, executing visual effects.");
+            Console.WriteLine("[DEBUG] Selection complete ("+CurrentPlayer.Name+"), executing visual effects.");
             // The location of a player is gently coloured. Remove previous colours and apply the new player's colour now.
             // This resets all colouring from all tiles, incl. ones currently yellow.
             foreach (Location location in Board)
@@ -656,13 +691,16 @@ namespace Monopoly.Game
                 }
             }
             // Reset variables that need resetting:
-            RollOne = 0; RollTwo = 0;
+            Roll = Tuple.Create(0, 0);
             DoubleRollCounter = 0;
+            HasPaidRent = true; // By default
             foreach (Player p in Players)
             {
+                // Reset the balance changed figure to clear values from the previous turn
                 p.BalanceChanged = 0;
             }
             Console.WriteLine("[DEBUG] Execution complete. Ready to go.");
+            ViewModel.ForcePropertyChanged();
         }
         /// <summary>
         /// Save and quit the game.
@@ -702,6 +740,137 @@ namespace Monopoly.Game
             {
                 // Close the program.
                 Environment.Exit(0);
+            }
+        }
+        /// <summary>
+        /// Handles the drawing of chance/chest cards.
+        /// </summary>
+        /// <param name="cardType">0: CHANCE card, 1: COMMUNITY CHEST card</param>
+        public async void DrawCard(int cardType)
+        {
+            Card drawnCard = cardType == 0 ? ChanceCards.Dequeue() : CommunityChestCards.Dequeue();
+            MetroDialogSettings drawnCardSettings = new MetroDialogSettings
+            {
+                AffirmativeButtonText =
+                    (drawnCard.Type == EnumCardType.AdvanceTo || drawnCard.Type == EnumCardType.GoBackTo) ? "Move as directed" :
+                    (drawnCard.Type == EnumCardType.Pay || drawnCard.Type == EnumCardType.PayOrPenalty || drawnCard.Type == EnumCardType.Recieve) ? "Proceed with payment" :
+                    "Go to jail",
+                NegativeButtonText = "Draw another card",
+                ColorScheme = MetroDialogColorScheme.Accented,
+            };
+
+            #region Text manipulation
+            string cardText = drawnCard.Text;
+            var cardTextSplit = cardText.Split('%');
+            for(int i = 0; i < cardTextSplit.Count(); i++)
+            {
+                try
+                {
+                    int replacementIndex = int.Parse(cardTextSplit[i]);
+                    Property getProperty = Board[drawnCard.Amounts[0]] as Property;
+                    cardTextSplit[i] = getProperty.Name;
+                } 
+                catch (FormatException)
+                {
+                    // Do nothing - this is not an integer. Continue with execution.
+                }
+            }
+            cardText = string.Join(null, cardTextSplit);
+            #endregion
+
+            var choice = await ViewModel.Dialogs.ShowMessageAsync(this, cardType == 0 ? "You've drawn a chance card!" : "You've drawn a community chest card!", cardText, drawnCard.Type == EnumCardType.PayOrPenalty ? MessageDialogStyle.AffirmativeAndNegative : MessageDialogStyle.Affirmative, drawnCardSettings);
+            switch(drawnCard.Type)
+            {
+                case EnumCardType.AdvanceTo:
+                case EnumCardType.GoBackTo:
+                    if(drawnCard.Amounts[0] >= 0)
+                    {
+                        MovePlayer(CurrentPlayer, CurrentPlayer.Location, drawnCard.Amounts[0]);
+                    } 
+                    else
+                    {
+                        if(drawnCard.Type == EnumCardType.AdvanceTo)
+                        {
+                            MovePlayer(CurrentPlayer, CurrentPlayer.Location, CurrentPlayer.Location + Math.Abs(drawnCard.Amounts[0]));
+                        } 
+                        else
+                        {
+                            MovePlayer(CurrentPlayer, CurrentPlayer.Location, CurrentPlayer.Location - Math.Abs(drawnCard.Amounts[0]));
+                        }
+                    }
+                    break;
+                case EnumCardType.Pay:
+                    if(drawnCard.TargetsPlayers)
+                    {
+                        foreach(Player player in Players)
+                        {
+                            // Do not deduct and add to yourself (even if, technically, it doesn't matter)
+                            if(player != CurrentPlayer)
+                            {
+                                // Deduct from the current player per player in the game
+                                player.Balance += drawnCard.Amounts[0];
+                                CurrentPlayer.Balance -= drawnCard.Amounts[0];
+                            }
+                        }
+                    } 
+                    else
+                    {
+                        // Deduct from the current player only into thin air
+                        CurrentPlayer.Balance -= drawnCard.Amounts[0];
+                    }
+                    break;
+                case EnumCardType.Recieve:
+                    if (drawnCard.TargetsPlayers)
+                    {
+                        foreach (Player player in Players)
+                        {
+                            // Do not deduct and add to yourself (even if, technically, it doesn't matter)
+                            if (player != CurrentPlayer)
+                            {
+                                // Deduct from the current player per player in the game
+                                player.Balance -= drawnCard.Amounts[0];
+                                CurrentPlayer.Balance += drawnCard.Amounts[0];
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Add to the current player only from thin air
+                        CurrentPlayer.Balance += drawnCard.Amounts[0];
+                    }
+                    break;
+                case EnumCardType.PayOrPenalty:
+                    if(choice == MessageDialogResult.Affirmative)
+                    {
+                        goto case EnumCardType.Pay;
+                    }
+                    else
+                    {
+                        DrawCard(drawnCard.Amounts[1]);
+                    }
+                    break;
+                case EnumCardType.Jail:
+                    Jail(true, CurrentPlayer);
+                    // If the player rolled a double, they would otherwise still need to take a turn. We need to undo this.
+                    _RollsRemaining = 0;
+                    OnPropertyChanged("RollsComplete");
+                    break;
+
+            }
+            if(Roll.Item1 != Roll.Item2)
+            {
+                // The card drawn has been resolved, with no more actions (rolls) remaining
+                ActionsUnresolved = 0;
+                _RollsRemaining = 0;
+                OnPropertyChanged("RollsComplete"); 
+            }
+            // Finally, we must requeue the card!!!
+            if(cardType == 0)
+            {
+                ChanceCards.Enqueue(drawnCard);
+            } else
+            {
+                CommunityChestCards.Enqueue(drawnCard);
             }
         }
         #endregion
@@ -1044,6 +1213,7 @@ namespace Monopoly.Game
             player.IsJailed = isJailed;
             if (isJailed)
             {
+                Board[player.Location].Depart(player);
                 MonopolyWindowViewModel.Handler.MovePlayer(player, player.Location, 10);
                 ActionsUnresolved = 0; _RollsRemaining = 0; OnPropertyChanged("RollsComplete");
             }

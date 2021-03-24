@@ -28,30 +28,6 @@ namespace Monopoly.Game
         public string Name { get; set; }
         public string Creator { get; set; }
         public string Language { get; set; }
-        /// <summary>
-        /// LanguageFlag turns the two letter language digit (e.g. GB) into a unciode flag/symbol representing that country (e.g. the Union Jack on supported devices).
-        /// </summary>
-        public string LanguageFlag
-        {
-            get
-            {
-                try
-                {
-                    if(Language == null)
-                    {
-                        throw new NullReferenceException();
-                    }
-                    return string.Concat(Language.ToUpper().Select(x => char.ConvertFromUtf32(x + 0x1F1A5)));
-                    // Retrieved from StackOverflow.
-                    // https://stackoverflow.com/a/61472035
-                } 
-                catch (NullReferenceException)
-                {
-                    // A language code was not entered in the application. Make this clear.
-                    return "ERROR";
-                }
-            }
-        }
         #endregion
 
         #region Gameboard Monopoly properties

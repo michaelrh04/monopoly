@@ -23,7 +23,7 @@
     <mah:MetroWindow.IconTemplate>
         <DataTemplate>
             <Grid Background="#22000000" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-                <Image Source="/Monopoly;component/Resources/Images/IconInset.png" Margin="3"/>
+                <Image Source="/Monopoly;component/Resources/Images/IconWhiteout.png" Margin="3"/>
             </Grid>
         </DataTemplate>
     </mah:MetroWindow.IconTemplate>
@@ -989,18 +989,15 @@
         </Viewbox>
 
         <!-- Add all the controls (buttons) where needed -->
-        <Button Command="{Binding SaveQuit}" Padding="0" Margin="5,0" Grid.Column="1" Grid.Row="12" Height="36" Width="36" Foreground="{StaticResource MahApps.Brushes.Accent2}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <icons:PackIconFontAwesome Height="36" Width="36" Kind="SaveSolid" VerticalAlignment="Center"/>
-        </Button>
-        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource SidebarButtonStyle}">
+        <Button Command="{Binding SaveQuit}" Grid.Column="2" Grid.Row="2" Style="{StaticResource SidebarButtonStyle}">
             <Viewbox>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="103"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="1" Text="Statistics" VerticalAlignment="Center" />
-                    <icons:PackIconFontAwesome Grid.Column="2" Kind="ChartBarSolid" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="1" Text="Save game" VerticalAlignment="Center" />
+                    <icons:PackIconFontAwesome Grid.Column="2" Kind="SaveSolid" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 </Grid>
             </Viewbox>
         </Button>
@@ -1052,8 +1049,8 @@
         </Button>
         <Viewbox Grid.Column="2" Grid.Row="10">
             <DockPanel DataContext="{Binding Handler}">
-                <icons:PackIconFontAwesome Kind="{Binding RollOne, Converter={StaticResource DiceNumberConverter}}" Margin="0,0,3,0"/>
-                <icons:PackIconFontAwesome Kind="{Binding RollTwo, Converter={StaticResource DiceNumberConverter}}"/>
+                <icons:PackIconFontAwesome Kind="{Binding Roll.Item1, Converter={StaticResource DiceNumberConverter}}" Margin="0,0,3,0"/>
+                <icons:PackIconFontAwesome Kind="{Binding Roll.Item2, Converter={StaticResource DiceNumberConverter}}"/>
             </DockPanel>
         </Viewbox>
         <Button Command="{Binding NextTurn}" Grid.Column="2" Grid.Row="12">
@@ -1063,6 +1060,9 @@
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Handler.ActionsUnresolved}" Value="0">
                             <Setter Property="IsEnabled" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Handler.AnimationOngoing}" Value="True">
+                            <Setter Property="IsEnabled" Value="False"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -1628,8 +1628,8 @@
                                 <Setter Property="Margin" Value="5,20"/>
                             </Style>
                         </DockPanel.Resources>
-                        <icons:PackIconFontAwesome Kind="{Binding RollOne, Converter={StaticResource DiceNumberConverter}}"/>
-                        <icons:PackIconFontAwesome Kind="{Binding RollTwo, Converter={StaticResource DiceNumberConverter}}"/>
+                        <icons:PackIconFontAwesome Kind="{Binding Roll.Item1, Converter={StaticResource DiceNumberConverter}}"/>
+                        <icons:PackIconFontAwesome Kind="{Binding Roll.Item2, Converter={StaticResource DiceNumberConverter}}"/>
                     </DockPanel>
                     <DockPanel>
                         <DockPanel.Resources>

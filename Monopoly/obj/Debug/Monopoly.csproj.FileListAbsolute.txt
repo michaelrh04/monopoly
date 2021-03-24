@@ -236,3 +236,7 @@ C:\Users\micha\OneDrive\Development\Coursework\Programming\Monopoly\Monopoly\obj
 C:\Users\micha\OneDrive\Development\Coursework\Programming\Monopoly\Monopoly\obj\Debug\Monopoly.csproj.GenerateResource.cache
 C:\Users\micha\OneDrive\Development\Coursework\Programming\Monopoly\Monopoly\obj\Debug\Monopoly.csproj.CoreCompileInputs.cache
 C:\Users\micha\OneDrive\Development\Coursework\Programming\Monopoly\Monopoly\obj\Debug\Monopoly.csproj.CopyComplete
+C:\Users\micha\OneDrive\Development\Coursework\Programming\Monopoly\Monopoly\obj\Debug\Editor\EditorWindow.g.cs
+C:\Users\micha\OneDrive\Development\Coursework\Programming\Monopoly\Monopoly\obj\Debug\Editor\EditorWindow.baml
+C:\Users\micha\OneDrive\Development\Coursework\Programming\Monopoly\Monopoly\bin\Debug\Resources\CommunityChestCards.json
+C:\Users\micha\OneDrive\Development\Coursework\Programming\Monopoly\Monopoly\bin\Debug\Resources\ChanceCards.json
