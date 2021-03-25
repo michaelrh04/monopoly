@@ -557,9 +557,9 @@ namespace Monopoly.Game
             if((Location)Board[destination] is Property property)
             {
                 ViewModel.SelectedProperty = property;
-                ActionsUnresolved++;
                 if (property.Owner != player)
                 {
+                    ActionsUnresolved++;
                     if(property.IsMortgaged)
                     {
                         HasPaidRent = true;
