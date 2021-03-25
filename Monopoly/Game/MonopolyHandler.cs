@@ -1106,6 +1106,10 @@ namespace Monopoly.Game
             foreach(Property property in transferredTo)
             {
                 property.Purchase(partner, 0);
+                if(property == Board[partner.Location] && partner == CurrentPlayer) // if the property being traded is the one the player is on, then
+                {
+                    HasPaidRent = true;
+                }
             }
             CurrentPlayer.Balance -= FromCurrentPlayerMoneyTrade;
             partner.Balance += FromCurrentPlayerMoneyTrade;
