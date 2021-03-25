@@ -816,7 +816,36 @@ namespace Monopoly.Game
                     else
                     {
                         // Deduct from the current player only into thin air
-                        CurrentPlayer.Balance -= drawnCard.Amounts[0];
+                        // We also need to check (it might be relative costs in this section)
+                        if (drawnCard.Amounts.Count() > 1)
+                        {
+                            // This is a houses/hotels dependent cost card
+                            int housesOwned = 0;
+                            int hotelsOwned = 0;
+                            foreach (KeyValuePair<string, ObservableCollection<Property>> set in CurrentPlayer.Inventory)
+                            {
+                                foreach(Property property in set.Value)
+                                {
+                                    if(property is Residence res)
+                                    {
+                                        if(res.Houses == 5)
+                                        {
+                                            hotelsOwned++;
+                                        } else
+                                        {
+                                            housesOwned += res.Houses;
+                                        }
+
+                                    }
+                                }
+                            }
+                            CurrentPlayer.Balance -= drawnCard.Amounts[0] * housesOwned;
+                            CurrentPlayer.Balance -= drawnCard.Amounts[1] * hotelsOwned;
+                        }
+                        else
+                        {
+                            CurrentPlayer.Balance -= drawnCard.Amounts[0];
+                        }
                     }
                     break;
                 case EnumCardType.Recieve:
@@ -1103,6 +1132,11 @@ namespace Monopoly.Game
             ToCurrentPlayerMoneyTrade = 0;
             // Update graphically
             ViewModel.ForcePropertyChanged();
+            // Force change in ActionsUnresolved
+            if(Roll.Item1 != Roll.Item2 && HasPaidRent)
+            {
+                ActionsUnresolved = 0;
+            }
         }
         public async void _DeclareBankruptcy(object sender)
         {
