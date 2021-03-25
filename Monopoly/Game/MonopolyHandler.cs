@@ -124,7 +124,7 @@ namespace Monopoly.Game
                 {
                     if(Board[CurrentPlayer.Location] is Property property)
                     {
-                        if (property.Owner == null || (!HasPaidRent && property.Owner == CurrentPlayer))
+                        if (property.Owner == null || (!HasPaidRent && property.Owner != CurrentPlayer))
                         {
                             // The property is unowned or has rent due! You cannot roll again yet.
                             return false;
