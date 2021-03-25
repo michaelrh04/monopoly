@@ -390,7 +390,7 @@ namespace Monopoly.Game
         /// </summary>
         public void ForcePropertyChanged()
         {
-            string[] propertyNames = { "SelectedProperty", "PayRent", "PurchaseProperty", "DeclineProperty" };
+            string[] propertyNames = { "SelectedProperty", "PayRent", "PurchaseProperty", "DeclineProperty", "MortgageProperty" };
             foreach (string propertyName in propertyNames)
             {
                 OnPropertyChanged(propertyName);
