@@ -628,7 +628,7 @@ namespace Monopoly.Game
                 }
                 foreach (Card cCard in cChestArray)
                 {
-                    ChanceCards.Enqueue(cCard);
+                    CommunityChestCards.Enqueue(cCard);
                 }
                 // Start the game!
                 CurrentPlayer = Players[0];
