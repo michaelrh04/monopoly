@@ -1226,8 +1226,9 @@
                                 It is <Run Text="{Binding NextAuctionPlayer.Name}"/>'s turn to bid.
                         </TextBlock>
                         <TextBlock FontStyle="Italic" Foreground="DarkGray" FontSize="10">
-                                The property is currently going for
-                                £<Run Text="{Binding Handler.MaximumBid, Mode=OneWay}" DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mah:MetroWindow}}}"/>.
+                            <Run Text="{Binding SelectedProperty.Name}" DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mah:MetroWindow}}}"/>
+                            is currently going for
+                            £<Run Text="{Binding Handler.MaximumBid, Mode=OneWay}" DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mah:MetroWindow}}}"/>.
                         </TextBlock>
                         <Rectangle Height="10"/>
                         <ItemsControl ItemsSource="{Binding Bids, UpdateSourceTrigger=PropertyChanged}" Height="282">
