@@ -1065,7 +1065,14 @@ namespace Monopoly.Game
                     // The player would now be required to pay rent; however, this is not how Monopoly auctions work
                     // Manually override the rent payment - it is unnecessary here - and resolve the pending activity.
                     HasPaidRent = true;
-                    ActionsUnresolved--;
+                    if(Roll.Item1 != Roll.Item2)
+                    {
+                        ActionsUnresolved = 0;
+                    }
+                    else
+                    {
+                        ActionsUnresolved = 1;
+                    }
                 }
                 Console.WriteLine("[DEBUG] Player " + Players[CurrentAuctionPlayerIndex].Name + " has withdrawn from auction.");
                 return;
