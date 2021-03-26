@@ -886,6 +886,7 @@ namespace Monopoly.Game
                     break;
 
             }
+            ActionsUnresolved--;
             if(Roll.Item1 != Roll.Item2)
             {
                 // The card drawn has been resolved, with no more actions (rolls) remaining
