@@ -428,7 +428,7 @@ namespace Monopoly.Game
         /// <summary>
         /// The MouseMove command promots changes in the MouseX and MouseY variables.
         /// </summary>
-        public ICommand MouseMove
+        public RelayCommand MouseMove
         {
             get
             {
@@ -438,7 +438,7 @@ namespace Monopoly.Game
         /// <summary>
         /// Rotating the board changes the enumerable BoardRotateMode of the converters and triggers changes in the bindings RotateButtonRotation and respective scale bindings for graphical effect.
         /// </summary>
-        public ICommand RotateBoard
+        public RelayCommand RotateBoard
         {
             get
             {
