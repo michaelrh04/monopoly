@@ -1,0 +1,355 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Monopoly.App" Collapsed="true">
+    <Position X="23.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.DiceNumberConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\DiceNumberConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.EqualityConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\EqualityConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.LobbyImageConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\ImageConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.RelayCommand" BaseTypeListCollapsed="true">
+    <Position X="38.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAQAACAAQAAEAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\RelayCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Player" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAABgACAAAAACQIAoSEgUAgAAAAAAAAAQAAgEAAAA=</HashCode>
+      <FileName>Users\Player.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Editor.EditorWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Editor\EditorWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Editor.EditorWindowViewModel" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABASOAQAEgEIAAIAQQUgBCIAggAGAEAgCDAAAA=</HashCode>
+      <FileName>Editor\EditorWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Editor.GenericEditorItem" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACIgAAAAAQAABAAQIgAAIAQAgCAAAAAAAQEAAAAgRAA=</HashCode>
+      <FileName>Editor\Models\GenericEditorItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Game.Card" Collapsed="true">
+    <Position X="30.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAQAACAAAAAA=</HashCode>
+      <FileName>Game\Models\Card.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.Game.Chance">
+    <Position X="12.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Game\Models\Chance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.Game.CommunityChest">
+    <Position X="17.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Game\Models\CommunityChest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.Game.Dummy" Collapsed="true">
+    <Position X="23.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Game\Models\Dummy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.Game.FreeParking">
+    <Position X="10.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Game\Models\FreeParking.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.Game.Gameboard">
+    <Position X="38.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAgEiAFAAAAAAAAAAAQAEgQAAAAAEAAAQAAAAAA=</HashCode>
+      <FileName>Game\Models\Gameboard.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="ViewModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Monopoly.Game.Go">
+    <Position X="14" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Game\Models\Go.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.Game.GoToJail">
+    <Position X="19.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Game\Models\GoToJail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.Game.Jail">
+    <Position X="21" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Game\Models\Jail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.Game.Location">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIQAAAACAkAQAAAAEAkAACAAAAAA=</HashCode>
+      <FileName>Game\Models\Location.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Monopoly.Game.Property">
+    <Position X="8.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QBQAAACAAQAABIggAAAAgAQAAgAAAAAAAAAAAAAIAAI=</HashCode>
+      <FileName>Game\Models\Property.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.Game.Residence">
+    <Position X="7" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgACAAAAAAAgIAAAAAAAI=</HashCode>
+      <FileName>Game\Models\Residence.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.Game.Station">
+    <Position X="8.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAI=</HashCode>
+      <FileName>Game\Models\Station.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.Game.Tax">
+    <Position X="15.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAABQAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Game\Models\Tax.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.Game.Utility">
+    <Position X="10.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAACAI=</HashCode>
+      <FileName>Game\Models\Utility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.Game.MonopolyHandler" BaseTypeListCollapsed="true">
+    <Position X="41.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAA0ABoATAIYgOEoDCmXBIg0EQhgDIAgCCMhKgIkMk=</HashCode>
+      <FileName>Game\MonopolyHandler.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="BoardConfiguration" />
+      <Field Name="ViewModel" />
+      <Property Name="AddBidOne" />
+      <Property Name="AddBidOneHundred" />
+      <Property Name="AddBidTen" />
+      <Property Name="RollDice" />
+      <Property Name="Trade" />
+      <Property Name="WithdrawAuction" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Game.MonopolyWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="23.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\MonopolyWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Game.MonopolyWindowViewModel" BaseTypeListCollapsed="true">
+    <Position X="35.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAABJAwCYCAIFYAQIAEqQgOQAqAxAUIBBAAWAAoA=</HashCode>
+      <FileName>Game\MonopolyWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PropertyClicked" />
+      <Property Name="RemoveHouse" />
+      <Property Name="AddHouse" />
+      <Property Name="DeclareBankruptcy" />
+      <Property Name="DeclineProperty" />
+      <Property Name="DismissPropertyClicked" />
+      <Property Name="NextProperty" />
+      <Property Name="MortgageProperty" />
+      <Property Name="NextTurn" />
+      <Property Name="PayRent" />
+      <Property Name="PurchaseProperty" />
+      <Property Name="MouseMove" />
+      <Property Name="RotateBoard" />
+      <Property Name="SaveQuit" />
+      <Property Name="UnmortgageProperty" />
+      <Property Name="Handler" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Converters.BoardColumnConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAIAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Models\Converters\BoardColumnConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Converters.BoardRowConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Models\Converters\BoardRowConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Converters.IconEnabledColourConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="23.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Models\Converters\IconEnabledColourConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Converters.IsVisualPropertyNullConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Models\Converters\IsVisualPropertyNullConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Converters.RentIndicator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Models\Converters\RentIndicatorConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Converters.UtilitySymbolConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Models\Converters\UtilitySymbolConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Menu.BoardData" Collapsed="true">
+    <Position X="26.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAQAAAAAAABAEAAAAAAAAAA=</HashCode>
+      <FileName>Menu\BoardData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.Menu.ParameterCompilerConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Menu\Converters\ParameterCompilerConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Menu.MainMenu" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Menu\MainMenu.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Menu.MainMenuViewModel" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACIAAoAgSgAQAYCIDQgBgBkgAAhEghAgIAQABCkAAA=</HashCode>
+      <FileName>Menu\MainMenuViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Monopoly.Properties.Resources" Collapsed="true">
+    <Position X="23.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAEAIAABEBAACQAAAAAAgCAAAAgAAIg=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monopoly.Properties.Settings" Collapsed="true">
+    <Position X="25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Monopoly.Status" Collapsed="true">
+    <Position X="28.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAIAAAAQAABAAAAAAAAAABAAIAAEAAA=</HashCode>
+      <FileName>Models\StatusEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Monopoly.Game.EnumCardType" Collapsed="true">
+    <Position X="26.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAEAAACgAAAAAAAAAAAAAAAAIAAAAAAAAAgAA=</HashCode>
+      <FileName>Game\Models\Enumeration\EnumCardType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Monopoly.Game.DummyType" Collapsed="true">
+    <Position X="25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAgAAAAAEAAAAgAAAAwAAAIAAABABAAABA=</HashCode>
+      <FileName>Game\Models\Enumeration\EnumDummyType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Monopoly.Converters.BoardRotateMode" Collapsed="true">
+    <Position X="23.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAwIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Models\Enumeration\EnumBoardRotateMode.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
