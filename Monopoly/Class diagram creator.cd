@@ -37,7 +37,7 @@
       <HashCode>AAAAAAQAQAACAAQAAEAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\RelayCommand.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Monopoly.Player" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="28.5" Y="3.5" Width="1.5" />
@@ -196,7 +196,7 @@
       <Property Name="Trade" />
       <Property Name="WithdrawAuction" />
     </ShowAsAssociation>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Monopoly.Game.MonopolyWindow" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="23.25" Y="3.5" Width="1.5" />
@@ -230,7 +230,7 @@
       <Property Name="UnmortgageProperty" />
       <Property Name="Handler" />
     </ShowAsAssociation>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Monopoly.Converters.BoardColumnConverter" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="25" Y="0.5" Width="1.5" />

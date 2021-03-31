@@ -909,7 +909,7 @@ namespace Monopoly.Game
         /// Pay the rent owed.
         /// </summary>
         /// <param name="sender"></param>
-        public void _PayRent(object sender = null)
+        public void _PayRent(object sender)
         {
             HasPaidRent = true;
             int rentOwed = ViewModel.SelectedProperty.GetRentOwed();
@@ -922,7 +922,7 @@ namespace Monopoly.Game
         /// Purchase a property.
         /// </summary>
         /// <param name="sender"></param>
-        public async void _PurchaseProperty(object sender = null)
+        public async void _PurchaseProperty(object sender)
         {
             // Ask if the user really wants to do this first:
             var DialogResult = await ViewModel.Dialogs.ShowMessageAsync(this, "Checkout", "You are about to purchase " + ViewModel.SelectedProperty.Name + " for £" + ViewModel.SelectedProperty.Price + ". Would you like to confirm the purchase?", MessageDialogStyle.AffirmativeAndNegative, MainMenuViewModel.YesNoSettings);
@@ -941,7 +941,7 @@ namespace Monopoly.Game
         /// Decline a property.
         /// </summary>
         /// <param name="sender"></param>
-        public async void _DeclineProperty(object sender = null)
+        public async void _DeclineProperty(object sender)
         {
             // Ask if the user really wants to do this first:
             var DialogResult = await ViewModel.Dialogs.ShowMessageAsync(this, "Are you sure?", "Are you sure you wish to decline the option to purchase " + ViewModel.SelectedProperty.Name + "? You won't be able to obtain it unless you win it in an auction, trade for it or land on it again in the future.", MessageDialogStyle.AffirmativeAndNegative, MainMenuViewModel.YesNoSettings);
@@ -967,7 +967,7 @@ namespace Monopoly.Game
                 ActionsUnresolved--;
             }
         }
-        public async void _AddHouse(object sender = null)
+        public async void _AddHouse(object sender)
         {
             // Ask if the user really wants to do this first:
             var target = ViewModel.SelectedProperty as Residence;
@@ -985,7 +985,7 @@ namespace Monopoly.Game
             }
             ViewModel.ForcePropertyChanged();
         }
-        public async void _RemoveHouse(object sender = null)
+        public async void _RemoveHouse(object sender)
         {
             // Ask if the user really wants to do this first:
             var target = ViewModel.SelectedProperty as Residence;
@@ -1003,7 +1003,7 @@ namespace Monopoly.Game
             }
             ViewModel.ForcePropertyChanged();
         }
-        public async void _ToggleMortgage(object sender = null)
+        public async void _ToggleMortgage(object sender)
         {
             var property = ViewModel.SelectedProperty;
             if(property.IsMortgaged)
