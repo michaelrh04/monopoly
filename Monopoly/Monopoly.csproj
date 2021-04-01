@@ -225,10 +225,10 @@
     <Compile Include="Game\Models\Location.cs" />
     <Compile Include="Game\MonopolyHandler.cs" />
     <Compile Include="Converters\ImageConverter.cs" />
-    <Compile Include="Menu\BoardData.cs" />
+    <Compile Include="Menu\Models\BoardData.cs" />
     <Compile Include="Menu\Converters\ParameterCompilerConverter.cs" />
     <Compile Include="Models\RelayCommand.cs" />
-    <Compile Include="Models\StatusEnum.cs" />
+    <Compile Include="Menu\Models\StatusEnum.cs" />
     <Compile Include="Users\Player.cs" />
     <Page Include="Editor\EditorWindow.xaml">
       <SubType>Designer</SubType>
@@ -288,6 +288,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="Class diagram creator 2.cd" />
     <None Include="Class diagram creator.cd" />
     <None Include="Monopoly_TemporaryKey.pfx" />
     <None Include="packages.config" />

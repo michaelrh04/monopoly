@@ -113,7 +113,6 @@ namespace Monopoly
                 return CountProperties(0);
             }
         }
-        public List<Player> InventoryChanged { get; set; }
         #endregion
 
         #region Private properties

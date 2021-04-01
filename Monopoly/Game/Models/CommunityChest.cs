@@ -17,7 +17,7 @@ namespace Monopoly.Game
         /// <summary>
         /// The community chest class is for all community chests, and requires the parameter for position it holds.
         /// </summary>
-        /// <param name="position">It's position on the board.</param>
+        /// <param name="position">Its position on the board.</param>
         public CommunityChest(int position, MonopolyWindowViewModel viewmodel) : base(viewmodel)
         {
             Position = position;
@@ -34,6 +34,5 @@ namespace Monopoly.Game
             MonopolyWindowViewModel.Handler.DrawCard(1);
         }
         #endregion
-
     }
 }

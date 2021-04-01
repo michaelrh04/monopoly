@@ -36,16 +36,6 @@ namespace Monopoly.Editor
         /// Using a set dictionary allows for both the monitoring of sets available and the colour codes for each set.
         /// </summary>
         public Dictionary<string, string> SetDictionary = new Dictionary<string, string>();
-        /// <summary>
-        /// Fetches the sets existing.
-        /// </summary>
-        public List<string> SetsExisting
-        {
-            get
-            {
-                return GetSetsExisting();
-            }
-        }
         public GenericEditorItem SelectedProperty { get
             {
                 return _SelectedProperty;
@@ -305,18 +295,6 @@ namespace Monopoly.Editor
             OnPropertyChanged("StationRents");
             OnPropertyChanged("UtilityRents");
             Console.WriteLine("Returning");
-        }
-        /// <summary>
-        /// This subroutine returns a list of sets existing in the SetDictionary.
-        /// </summary>
-        private List<string> GetSetsExisting()
-        {
-            List<string> outputList = new List<string>();
-            foreach (KeyValuePair<string, string> pair in SetDictionary)
-            {
-                outputList.Add(pair.Key);
-            }
-            return outputList;
         }
         #endregion
 
