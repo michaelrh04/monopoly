@@ -17,7 +17,7 @@ namespace Monopoly.Game
         /// <summary>
         /// The chance class is for the 'go to jail' tile, and requires the parameter for position it holds.
         /// </summary>
-        /// <param name="position">It's position on the board.</param>
+        /// <param name="position">Its position on the board.</param>
         public GoToJail(int position, MonopolyWindowViewModel viewmodel) : base(viewmodel)
         {
             Position = position;

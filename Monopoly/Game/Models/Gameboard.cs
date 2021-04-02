@@ -19,7 +19,6 @@ namespace Monopoly.Game
         #region Constructor
         public Gameboard(MonopolyWindowViewModel viewmodel)
         {
-            Console.WriteLine("[DEBUG] Constructing the Gameboard.");
             ViewModel = viewmodel;
         }
         #endregion

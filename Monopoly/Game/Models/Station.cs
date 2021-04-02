@@ -35,6 +35,5 @@ namespace Monopoly.Game
             return MonopolyWindowViewModel.Handler.BoardConfiguration.StationsRent[Owner.Inventory["Stations"].Count(p => p.IsMortgaged == false) - 1];
         }
         #endregion
-
     }
 }

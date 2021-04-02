@@ -17,8 +17,7 @@ namespace Monopoly.Game
         /// </summary>
         public Utility(MonopolyWindowViewModel viewmodel) : base(viewmodel)
         {
-            //Land = new RelayCommand(_Land);
-            //AddHouse = new AddHouseCommand(_AddHouse); basically, same for remove house
+
         }
         #endregion
 
@@ -33,14 +32,9 @@ namespace Monopoly.Game
         }
         public override int GetRentOwed()
         {
-            int multiplier = MonopolyWindowViewModel.Handler.BoardConfiguration.UtilityMultipliers[0];
-            if (Owner.Inventory["Utilities"].Count(p => p.IsMortgaged == false) == MonopolyWindowViewModel.Handler.BoardConfiguration.Utilities.Count)
-            {
-                multiplier = MonopolyWindowViewModel.Handler.BoardConfiguration.UtilityMultipliers[1];
-            }
+            int multiplier = MonopolyWindowViewModel.Handler.BoardConfiguration.UtilityMultipliers[Owner.Inventory["Utilities"].Count(p => p.IsMortgaged == false)];
             return multiplier * (MonopolyWindowViewModel.Handler.Roll.Item1 + MonopolyWindowViewModel.Handler.Roll.Item2);
         }
         #endregion
-
     }
 }

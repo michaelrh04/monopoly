@@ -15,9 +15,9 @@ namespace Monopoly.Game
     {
         #region Constructor
         /// <summary>
-        /// The chance class is for all chance cards, and requires the parameter for position it holds.
+        /// The class representative of the 'jail' tile
         /// </summary>
-        /// <param name="position">It's position on the board.</param>
+        /// <param name="position">Its position on the board.</param>
         public Jail(int position, MonopolyWindowViewModel viewmodel) : base(viewmodel)
         {
             Position = position;
@@ -31,7 +31,7 @@ namespace Monopoly.Game
         #region Subroutines
         public override void Land(Player player)
         {
-            
+            // Do nothing
         }
         #endregion
     }

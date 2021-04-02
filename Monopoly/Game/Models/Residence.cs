@@ -17,8 +17,7 @@ namespace Monopoly.Game
         /// </summary>
         public Residence(MonopolyWindowViewModel viewmodel) : base(viewmodel)
         {
-            //Land = new RelayCommand(_Land);
-            //AddHouse = new AddHouseCommand(_AddHouse); basically, same for remove house
+            
         }
         #endregion
 
@@ -31,14 +30,7 @@ namespace Monopoly.Game
         #region Subroutines
         public override void Land(Player player)
         {
-            if (Owner != null)
-            {
-                // The property is owned!
-            } 
-            else
-            {
-                
-            }
+            // Do nothing
         }
         public override int GetRentOwed()
         {

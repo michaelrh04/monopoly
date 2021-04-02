@@ -289,7 +289,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Class diagram creator 2.cd" />
-    <None Include="Class diagram creator.cd" />
     <None Include="Monopoly_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

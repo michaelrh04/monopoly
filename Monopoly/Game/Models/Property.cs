@@ -99,12 +99,8 @@ namespace Monopoly.Game
                 }
                 catch (FormatException)
                 {
+                    // This property has no properly defined colour.
                     return new SolidColorBrush(Colors.Transparent);
-                    //THIS MUST BE FIXED LATER
-                    //THIS MUST BE FIXED LATER
-                    //THIS MUST BE FIXED LATER
-                    //THIS MUST BE FIXED LATER
-                    //THIS MUST BE FIXED LATER
                 }
             } 
         }

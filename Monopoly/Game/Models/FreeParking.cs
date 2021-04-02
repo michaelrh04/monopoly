@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 namespace Monopoly.Game
 {
     /// <summary>
-    /// All the model logic for chance cards
+    /// All the model logic for free parking
     /// </summary>
     [Serializable]
     public class FreeParking : Location
     {
         #region Constructor
         /// <summary>
-        /// The chance class is for all chance cards, and requires the parameter for position it holds.
+        /// The free parking class represents the free parking square
         /// </summary>
-        /// <param name="position">It's position on the board.</param>
+        /// <param name="position">Its position on the board.</param>
         public FreeParking(int position, MonopolyWindowViewModel viewmodel) : base(viewmodel)
         {
             Position = position;

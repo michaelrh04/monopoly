@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 namespace Monopoly.Game
 {
     /// <summary>
-    /// All the model logic for chance cards
+    /// All the model logic for the go square
     /// </summary>
     [Serializable]
     public class Go : Location
     {
         #region Constructor
         /// <summary>
-        /// The chance class is for all chance cards, and requires the parameter for position it holds.
+        /// The Go class is for representing the go square
         /// </summary>
-        /// <param name="position">It's position on the board.</param>
+        /// <param name="position">Its position on the board.</param>
         public Go(int position, MonopolyWindowViewModel viewmodel) : base(viewmodel)
         {
             Position = position;
@@ -35,6 +35,5 @@ namespace Monopoly.Game
             player.Balance += int.Parse(MonopolyWindowViewModel.Handler.Settings["passing_go_amount"].ToString()) * int.Parse(MonopolyWindowViewModel.Handler.Settings["passing_go_amount_multiplier"].ToString());
         }
         #endregion
-
     }
 }

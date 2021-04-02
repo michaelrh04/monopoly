@@ -296,7 +296,7 @@ namespace Monopoly.Game
                         }
                     }
                     // If there is a hotel on this tile, we need to make sure it is physically possible for us to get a new house.
-                    if (res.Houses == 5 && ((bool)Handler.Settings["limit_house_hotel_numbers"]) && Handler.GetHousesAvailable() == 0)
+                    if (res.Houses == 5 && ((bool)Handler.Settings["limit_house_hotel_numbers"]) && Handler.GetHousesAvailable() < 4)
                     {
                         return false;
                     }
@@ -493,6 +493,9 @@ namespace Monopoly.Game
                 }
             }
         }
+        /// <summary>
+        /// Allows the view-model to lock the mouse position and prevent board movement (if ever needed).
+        /// </summary>
         public bool LockMouseVisual
         {
             get
@@ -615,19 +618,19 @@ namespace Monopoly.Game
             }
         }
         /// <summary>
-        /// ViewModel subroutine ford dismissing the property selected
+        /// ViewModel subroutine for dismissing the property selected
         /// </summary>
         /// <param name="_sender"></param>
         private async void _DismissPropertyClicked(object _sender)
         {
             // If the sender is null, dismissal has been called from within the viewmodel.
-            // If it is not null, it has been called from the view: as a result, for visual effect, delay action for a second.
+            // If it is not null, it has been called from the view: as a result, for visual effect, delay action for 1/4 second.
             IsVisualPropertyNullConverter.ForceTrueResult = true;
-            OnPropertyChanged("SelectedProperty");
+            SelectedProperty = null;
             // Prompt the view to run the animation.
             IsVisualPropertyNullConverter.ForceTrueResult = false;
             await Task.Delay(250);
-            SelectedProperty = null;
+            OnPropertyChanged("SelectedProperty");
         }
         /// <summary>
         /// ViewModel subroutine for requesting the next property be displayed
