@@ -218,7 +218,6 @@
     <Compile Include="Editor\EditorWindowViewModel.cs" />
     <Compile Include="Editor\Models\GenericEditorItem.cs" />
     <Compile Include="Game\Models\Card.cs" />
-    <Compile Include="Game\Models\Converters\IconEnabledColourConverter.cs" />
     <Compile Include="Game\Models\Dummy.cs" />
     <Compile Include="Game\Models\Enumeration\EnumCardType.cs" />
     <Compile Include="Game\Models\Enumeration\EnumDummyType.cs" />

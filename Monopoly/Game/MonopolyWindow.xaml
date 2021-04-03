@@ -54,7 +54,6 @@
             <conv:UtilitySymbolConverter x:Key="UtilitySymbolConverter"/>
             <conv:IsVisualPropertyNullConverter x:Key="IsVisualPropertyNullConverter"/>
             <conv:RentIndicator x:Key="RentIndicator"/>
-            <conv:IconEnabledColourConverter x:Key="IconEnabledColourConverter"/>
             <!-- Define the button styles -->
             <Style x:Key="SidebarButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource MahApps.Styles.Button.Flat}">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent2}"/>
@@ -607,14 +606,6 @@
                             <Setter Property="Height" Value="64"/>
                             <Setter Property="Margin" Value="3,3"/>
                             <Setter Property="Background" Value="Transparent"/>
-                        </Style>
-                        <Style TargetType="{x:Type icons:PackIconMaterial}">
-                            <Setter Property="Width" Value="60"/>
-                            <Setter Property="Height" Value="60"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="Foreground" Value="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType={x:Type mah:Tile}, Mode=FindAncestor}, Converter={StaticResource IconEnabledColourConverter}, UpdateSourceTrigger=PropertyChanged}"/>
-                            <Setter Property="IsHitTestVisible" Value="False"/>
                         </Style>
                         <Style TargetType="{x:Type icons:PackIconFontAwesome}">
                             <Setter Property="VerticalAlignment" Value="Center"/>
