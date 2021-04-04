@@ -352,7 +352,7 @@
                             </Border>
                         </DataTemplate>
 
-                        <!-- Define how the railway station properties are to appear on the board -->
+                        <!-- Define how the utility properties are to appear on the board -->
                         <DataTemplate DataType="{x:Type local:Utility}">
                             <Border Style="{StaticResource LocationStyle}">
                                 <Grid Background="Transparent">

@@ -161,7 +161,7 @@ namespace Monopoly.Editor
         private void _SaveBoard(object sender)
         {
             // Fetch the gameboard to save
-            Gameboard saveTarget = CovertGenericListToGameboard(Board);
+            Gameboard saveTarget = ConvertGenericListToGameboard(Board);
             saveTarget.Name = BoardName;
             saveTarget.Creator = Creator;
             saveTarget.Language = Language;
@@ -394,7 +394,7 @@ namespace Monopoly.Editor
             }
             return outputList;
         }
-        private Gameboard CovertGenericListToGameboard(ObservableCollection<GenericEditorItem> list)
+        private Gameboard ConvertGenericListToGameboard(ObservableCollection<GenericEditorItem> list)
         {
             // Create defining lists for collation later
             List<Residence> residentialList = new List<Residence>();

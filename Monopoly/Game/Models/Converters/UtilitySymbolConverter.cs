@@ -31,7 +31,8 @@ namespace Monopoly.Converters
             else if ((string)value == "Tap")
             {
                 return PackIconFontAwesomeKind.FaucetSolid;
-            } else
+            } 
+            else
             {
                 return PackIconFontAwesomeKind.MapMarkerAltSolid;
             }
