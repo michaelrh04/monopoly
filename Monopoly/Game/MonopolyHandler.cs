@@ -442,6 +442,7 @@ namespace Monopoly.Game
                 {
                     // The player has broken from jail! Do not terminate the process.
                     Jail(false, CurrentPlayer);
+                    DoubleRollCounter++;
                 } 
                 else
                 {
