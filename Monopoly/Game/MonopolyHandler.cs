@@ -606,7 +606,7 @@ namespace Monopoly.Game
                     if (tempPlayerList[newIndex] == null)
                     {
                         // Index not used.
-                        tempPlayerList[newIndex] = Players[newIndex];
+                        tempPlayerList[newIndex] = Players[successes];
                         successes++;
                     }
                     // Else, the index is taken, try again.
