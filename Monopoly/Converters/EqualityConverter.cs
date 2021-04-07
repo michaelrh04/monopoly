@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 namespace Monopoly
 {
     /// <summary>
-    /// Used to convert any string to the source of an image.
+    /// Returns true if all parameters are equal to one another.
     /// </summary>
     class EqualityConverter : IMultiValueConverter
     {

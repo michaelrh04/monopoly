@@ -1066,7 +1066,7 @@ namespace Monopoly.Game
                     // The player would now be required to pay rent; however, this is not how Monopoly auctions work
                     // Manually override the rent payment - it is unnecessary here - and resolve the pending activity.
                     HasPaidRent = true;
-                    if(Roll.Item1 != Roll.Item2)
+                    if (Roll.Item1 != Roll.Item2)
                     {
                         ActionsUnresolved = 0;
                     }
