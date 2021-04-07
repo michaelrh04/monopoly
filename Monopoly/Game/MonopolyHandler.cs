@@ -495,7 +495,6 @@ namespace Monopoly.Game
             {
                 // If it does not equal -1, handle it (this has come from another tile on the board).
                 // From = -1 when the player is being added from nowhere.
-                // Handle animation.
                 Board[destination].Arrive(player);
                 // This needs no animation; cancel it.
                 return;
@@ -561,7 +560,7 @@ namespace Monopoly.Game
                 if (property.Owner != player)
                 {
                     ActionsUnresolved++;
-                    if(property.IsMortgaged)
+                    if(property.IsMortgaged || (property.Owner.IsJailed && ((bool)Settings["allow_rent_collection_while_jailed"]) == false))
                     {
                         HasPaidRent = true;
                         ActionsUnresolved--;
