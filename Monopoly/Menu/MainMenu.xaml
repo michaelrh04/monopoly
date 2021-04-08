@@ -225,21 +225,6 @@
                                                 <TextBlock Text="This player is a guest (account not logged in)."/>
                                             </mah:Tile.ToolTip>
                                         </mah:Tile>
-                                        <!--<mah:Tile> NOT NEEDED: STATISTICS NOT IMPLEMENTED
-                                            <icons:PackIconMaterial Kind="Finance"/>
-                                            <mah:Tile.Style>
-                                                <Style BasedOn="{StaticResource PlayerOption}" TargetType="{x:Type mah:Tile}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Online}" Value="False">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </mah:Tile.Style>
-                                            <mah:Tile.ToolTip>
-                                                <TextBlock Text="This game will count towards the user's account statistics."/>
-                                            </mah:Tile.ToolTip>
-                                        </mah:Tile>-->
                                     </StackPanel>
                                     <!-- Draw the bottom figure (piece) -->
                                     <Image Source="{Binding Icon, Converter={StaticResource LobbyImageConverter}}" VerticalAlignment="Bottom" Grid.Row="2"/>
