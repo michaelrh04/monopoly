@@ -1,4 +1,4 @@
-# Monopoly
+# Monopoly project
 
 This project to re-create the board game **Monopoly** was completed for the A-level computer science coursework component (AQA) for the 2021 exam year. The solution is written ultimately as a Windows Presentation Foundation (WPF) app, using XAML, with the large majority of functionality handled and executed with C# view-models and models (the application operates along the MVVM pattern).
 
