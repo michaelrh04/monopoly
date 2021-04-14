@@ -244,7 +244,7 @@ namespace Monopoly.Game
                     {
                         foreach (Residence setMember in Handler.BoardConfiguration.Residences[res.Set])
                         {
-                            if ((setMember.Houses != res.Houses && setMember.Houses != res.Houses + 1) || setMember.Owner != Handler.CurrentPlayer)
+                            if ((setMember.Houses != res.Houses && setMember.Houses != res.Houses + 1) || setMember.Owner != Handler.CurrentPlayer || setMember.IsMortgaged)
                             {
                                 return false;
                             }
