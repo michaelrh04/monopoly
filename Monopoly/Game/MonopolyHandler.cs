@@ -917,6 +917,7 @@ namespace Monopoly.Game
             CurrentPlayer.Balance -= rentOwed;
             ViewModel.SelectedProperty.Owner.Balance += rentOwed;
             ActionsUnresolved--; OnPropertyChanged("PayRent");
+            ViewModel.ForcePropertyChanged();
         }
         /// <summary>
         /// Purchase a property.
@@ -966,6 +967,7 @@ namespace Monopoly.Game
                 ViewModel.SelectedProperty = null;
                 ActionsUnresolved--;
             }
+            ViewModel.ForcePropertyChanged();
         }
         public async void _AddHouse(object sender)
         {
@@ -1017,8 +1019,8 @@ namespace Monopoly.Game
                     return;
                 }
                 property.IsMortgaged = false;
-                // This integer does not need try-catch error handling as all the permitted values for a Monopoly price will be integers after this calculation.
-                double subtraction = (property.Price / 2) * 1.1;
+                // This integer does not need try-catch error handling as all values for a Monopoly price will be integers after this calculation (all prices are multiples of 10 anyway).
+                double subtraction = property.Price * 1.1;
                 CurrentPlayer.Balance -= int.Parse(subtraction.ToString());
             } 
             else
@@ -1032,8 +1034,9 @@ namespace Monopoly.Game
                     return;
                 }
                 property.IsMortgaged = true;
-                CurrentPlayer.Balance += (property.Price / 2);
+                CurrentPlayer.Balance += property.Price;
             }
+            ViewModel.ForcePropertyChanged();
         }
         public async void _IncreaseBid(object sender)
         {

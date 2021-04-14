@@ -32,7 +32,7 @@ namespace Monopoly.Game
         }
         public override int GetRentOwed()
         {
-            int multiplier = MonopolyWindowViewModel.Handler.BoardConfiguration.UtilityMultipliers[Owner.Inventory["Utilities"].Count(p => p.IsMortgaged == false)];
+            int multiplier = MonopolyWindowViewModel.Handler.BoardConfiguration.UtilityMultipliers[Owner.Inventory["Utilities"].Count(p => p.IsMortgaged == false) - 1];
             return multiplier * (MonopolyWindowViewModel.Handler.Roll.Item1 + MonopolyWindowViewModel.Handler.Roll.Item2);
         }
         #endregion

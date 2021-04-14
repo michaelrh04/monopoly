@@ -96,6 +96,14 @@
 	},
 	{
 		"Type": 5,
+		"TargetsPlayers": false,
+		"Amounts": [
+			50
+		],
+		"Text": "Bank error in your favour. Collect £50."
+	},
+	{
+		"Type": 5,
 		"TargetsPlayers": true,
 		"Amounts": [
 			10
@@ -117,11 +125,5 @@
 			1
 		],
 		"Text": "Go back to %1%."
-	},
-	{
-		"Type": 6,
-		"TargetsPlayers": false,
-		"Amounts": null,
-		"Text": "GET OUT OF JAIL FREE. This card may be kept until needed or sold."
 	}
 ]
