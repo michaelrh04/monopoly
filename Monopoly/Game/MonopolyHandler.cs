@@ -1166,6 +1166,7 @@ namespace Monopoly.Game
             // Handle the bankruptcy!
             // Declare the player bankrupt.
             CurrentPlayer.Digit = -1;
+            Board[CurrentPlayer.Location].Depart(CurrentPlayer);
             // Has the game ended yet?
             int playersLeft = 0;
             foreach (Player player in Players)
@@ -1184,7 +1185,7 @@ namespace Monopoly.Game
             }
             // First, we need to determine whether or not this player is bankrupt to the bank or another player. This is simple.
             Player playerBankruptTo = null;
-            if(Board[CurrentPlayer.Location] is Property property)
+            if(Board[CurrentPlayer.Location] is Property property && !HasPaidRent)
             {
                 playerBankruptTo = (property.Owner == null || property.Owner == CurrentPlayer) ? null : property.Owner;
             }
