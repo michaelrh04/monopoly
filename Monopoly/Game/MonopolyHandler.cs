@@ -126,7 +126,7 @@ namespace Monopoly.Game
                     {
                         if (property.Owner == null)
                         {
-                            // The property is unowned or has rent due! You cannot roll again yet.
+                            // The property is unowned! You cannot roll again yet.
                             return false;
                         }
                     }
