@@ -120,9 +120,11 @@
 		"Text": "Your building loan matures. Collect £150."
 	},
 	{
-		"Type": 6,
+		"Type": 5,
 		"TargetsPlayers": false,
-		"Amounts": null,
-		"Text": "GET OUT OF JAIL FREE. This card may be kept until needed or sold."
+		"Amounts": [
+			20
+		],
+		"Text": "You win second prize in a beauty contest. Collect £20."
 	}
 ]
