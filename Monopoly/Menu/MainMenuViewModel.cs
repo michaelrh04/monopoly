@@ -250,7 +250,7 @@ namespace Monopoly.Menu
                         return;
                     }
                     // We should now write to the server. The primary key (key) will be autoincremented database-side.
-                    string query = @"INSERT INTO `accounts` (`username`, `email`, `password`, `firstname`, `surname`) VALUES ('" + details[0] + "', '" + details[4] + "', '" + ((PasswordBox)details[1]).Password + "', '" + details[2] + "', '" + details[3] + "');";
+                    string query = @"INSERT INTO `accounts` (`username`, `email`, `password`, `firstname`, `surname`) VALUES ('" + details[0] + "', '" + details[4] + "', '" + ((PasswordBox)details[1]).Password + "', '" + details[2] + "', '" + details[3] + "')";
                     MySqlCommand addition = new MySqlCommand(query, sqlConnection);
                     addition.ExecuteNonQuery();
                     sqlConnection.Close();
