@@ -269,7 +269,7 @@
                         </Run.Style>
                     </Run>
                 </TextBlock>
-                <ScrollViewer Height="358">
+                <ScrollViewer Height="288">
                     <ScrollViewer.Style>
                         <Style TargetType="{x:Type ScrollViewer}">
                             <Style.Triggers>
